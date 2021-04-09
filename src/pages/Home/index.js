@@ -1,9 +1,14 @@
 import React from 'react'
-import { MdExitToApp } from 'react-icons/md'
+import { MdExitToApp} from 'react-icons/md'
 
 import { Main, Container, Top, Section } from './styles'
 
+import Modal from '../Components/Modal'
+import useModal from '../Components/Modal/useModal'
+
 export default function Home() {
+    const { isShowing, toggle } = useModal()
+
     return (
         <Main>
             <Container>
@@ -24,7 +29,10 @@ export default function Home() {
                 <Section>
                     <form>
                         <div className='button'>
-                            <button type='button'>Upload</button>
+                            <button type='button' onClick={toggle}>
+                                Upload
+                            </button>
+                            <Modal isShowing={isShowing} hide={toggle} />
                         </div>
                     </form>
 

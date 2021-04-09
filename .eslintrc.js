@@ -18,7 +18,7 @@ module.exports = {
     },
     plugins: ['react', 'jsx-a11y', 'prettier'],
     rules: {
-        'prettier/prettier': 'error',
+        'prettier/prettier': ['error', { endOfLine: 'auto' }],
         'react/jsx-filename-extension': [
             'error',
             { extensions: ['.js', '.jsx'] },
@@ -36,5 +36,6 @@ module.exports = {
         'no-console': 'off',
         'jsx-a11y/label-has-associated-control': 'off',
         'react/prop-types': 'off',
+        'class-methods-use-this': false,
     },
 }

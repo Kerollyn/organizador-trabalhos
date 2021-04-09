@@ -96,6 +96,7 @@ export const Section = styled.section`
         li.row-center {
             align-items: center;
             margin-top: 1px;
+            background-color: #fff;
         }
 
         li {
