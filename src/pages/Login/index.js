@@ -8,14 +8,14 @@ import axios from 'axios';
 
 export default function Login() {
 
-    const [userName, setUser] = useState([]);
+    const [email, setMail] = useState([]);
     const [password, setPassword] = useState([]);
     let history = useHistory();
 
     function handleSubmit() {
 
         axios.post('https://heroku-org-trabalhos-api.herokuapp.com/auth/token', {
-            userName,
+            email,
             password
         })
             .then(res => {
@@ -24,6 +24,7 @@ export default function Login() {
                 history.push("/home");
             })
             .catch(error => {
+                alert("Usuário ou senha errado!")
                 console.error(error)
             })
     }
@@ -36,7 +37,7 @@ export default function Login() {
 
                     <BlockInput>
                         <label>E-mail</label>
-                        <Input name='user' type='text' value={userName} onChange={e => setUser(e.target.value)} />
+                        <Input name='user' type='text' value={email} onChange={e => setMail(e.target.value)} />
                     </BlockInput>
                     <BlockInput>
                         <label>Senha</label>

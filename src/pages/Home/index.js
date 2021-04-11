@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
 import { Main, Container, Top, Section } from './styles'

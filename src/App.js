@@ -1,18 +1,17 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import Routes from './routes/index'
+import Routes from './routes/index';
 
-import GlobalStyle from './styles/global'
+import GlobalStyle from './styles/global';
 
 function App() {
-    // return <Routes />;
-    return (
-        <BrowserRouter>
-            <Routes />
-            <GlobalStyle />
-        </BrowserRouter>
-    )
+  return (
+    <BrowserRouter>
+      <Routes />
+      <GlobalStyle />
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
