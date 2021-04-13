@@ -9,6 +9,7 @@ export default function SingUp () {
     const [name, setUser] = useState([]);
     const [password, setPassword] = useState([]);
     const [email, setMail] = useState([]);
+    const [passwordConfirmation, setPasswordConfirmation] = useState([]);
     let history = useHistory();
 
     function handleSubmit() {
@@ -16,7 +17,8 @@ export default function SingUp () {
         axios.post('https://heroku-org-trabalhos-api.herokuapp.com/user', {
             name,
             email,
-            password
+            password,
+            passwordConfirmation
         })
             .then(res => {
                 console.log(res);
@@ -49,7 +51,7 @@ export default function SingUp () {
                     </BlockInput>
                     <BlockInput>
                         <label>Repita a senha</label>
-                        <Input type='password'/>
+                        <Input type='password' value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)}/>
                     </BlockInput>
                     <br />
 
