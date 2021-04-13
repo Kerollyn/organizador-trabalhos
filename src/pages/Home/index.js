@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
 import { Main, Container, Top, Section } from './styles'
@@ -8,6 +8,7 @@ import useModal from '../Components/Modal/useModal'
 
 export default function Home() {
     const { isShowing, toggle } = useModal()
+    const [file, setFile] = useState([])
 
     return (
         <Main>
@@ -32,7 +33,7 @@ export default function Home() {
                             <button type='button' onClick={toggle}>
                                 Upload
                             </button>
-                            <Modal isShowing={isShowing} hide={toggle} />
+                            <Modal isShowing={isShowing} hide={toggle} file={file} setFile={setFile} />
                         </div>
                     </form>
 
