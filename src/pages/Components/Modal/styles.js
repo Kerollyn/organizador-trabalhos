@@ -47,7 +47,7 @@ export const ModalTeste = styled.div`
         div.modal-button {
             display: flex;
             justify-content: flex-end;
-
+            alignItems: "center"
             button {
                 background-color: #fff;
                 color: #6d6d6d;

@@ -14,12 +14,12 @@ export const Aside = styled.aside`
     border-radius: 5px;
     background-color: #668cff;
     width: 360px;
-    height: 450px;
+    height: 550px;
 
     display: flex;
     justify-content: center;
     form {
-        margin-top: 50px;
+        margin-top: 80px;
         display: flex;
         flex-direction: column;
         width: 250px;
@@ -31,7 +31,7 @@ export const Aside = styled.aside`
             text-align: center;
         }
         button {
-            padding: 6px 12px;
+            padding: 8px 12px;
             margin-top: 2px;
             display: flex;
             align-items: center;
@@ -48,11 +48,11 @@ export const Aside = styled.aside`
 
 export const BlockInput = styled.div`
     & + & {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 
     label {
-        font-size: 14px;
+        font-size: 16px;
         color: #eee;
     }
 `
@@ -60,10 +60,10 @@ export const BlockInput = styled.div`
 export const Input = styled.input`
     color: #000;
     border: 2px solid #9e9e9e;
-    border-radius: 4px;
-    margin-top: 5px;
+    border-radius: 6px;
+    margin-top: 2px;
     font-size: 16px;
-    padding: 15px 0 5px 0;
+    padding: 19px 0 8px 0;
     width: 100%;
     height: 20px;
 

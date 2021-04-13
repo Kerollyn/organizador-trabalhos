@@ -62,6 +62,7 @@ export const Section = styled.section`
         div {
             margin-bottom: 20px;
             width: 100%;
+
             button {
                 height: 29px;
                 width: 91px;
@@ -71,6 +72,7 @@ export const Section = styled.section`
                 background-color: #562c19;
                 border-color: #562c19;
                 border-radius: 4px;
+                
                 &:hover {
                     background-color: #b97415;
                     border: 1px solid #562c19;
