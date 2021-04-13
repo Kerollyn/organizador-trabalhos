@@ -15,7 +15,6 @@ export const Aside = styled.aside`
     background-color: #668cff;
     width: 360px;
     height: 400px;
-
     display: flex;
     justify-content: center;
     form {
@@ -52,6 +51,7 @@ export const BlockInput = styled.div`
     label {
         font-size: 16px;
         color: #eee;
+
     }
 `
 
