@@ -21,8 +21,6 @@ export default function SingUp () {
             passwordConfirmation
         })
             .then(res => {
-                console.log(res);
-                console.log(res.data);
                 alert("Usuário cadastrado!")
                 history.push("/");
             })

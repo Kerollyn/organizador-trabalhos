@@ -2,13 +2,13 @@ import { React, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-<<<<<<< HEAD
-import { Container, Aside, BlockInput, Input, Button } from './styles';
-=======
 import { Container, Aside, BlockInput, Input } from './styles';
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+
+import constants from '../../shared/constants'
+
+const { TOKEN_STORAGE_KEY, BEARER_TOKEN_PREFIX } = constants
 
 export default function Login() {
 
@@ -23,8 +23,9 @@ export default function Login() {
             password
         })
             .then(res => {
-                console.log(res)
-                console.log(res.data)
+                const { token } = res.data || {}
+                const bearerToken = `${ BEARER_TOKEN_PREFIX } ${ token }`
+                localStorage.setItem( TOKEN_STORAGE_KEY, bearerToken )
                 history.push("/home");
             })
             .catch(error => {
@@ -50,19 +51,10 @@ export default function Login() {
                     <br />
 
                     <br />
-<<<<<<< HEAD
-                    <Button>
-                    <button type='button' onClick={handleSubmit}>Entrar</button>
-                    <Link to="/register">
-                        <button type='button'>Cadastrar</button>
-                    </Link>
-                    </Button>
-=======
                     <button type='button' onClick={handleSubmit}>Entrar</button>
                     <Link to="/register">
                         <button type='button'>Cadastro</button>
                     </Link>
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
                 </form>
             </Aside>
         </Container>
