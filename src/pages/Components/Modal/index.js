@@ -6,7 +6,7 @@ import { MdFileUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
 
-const fileUpload = async( file ) => {
+const fileUpload = async( file, fetchClassWorks ) => {
     const formData = new FormData()
     formData.append('file', file, file.name)
 
@@ -19,6 +19,7 @@ const fileUpload = async( file ) => {
     const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
     try {
         await axios.post( url, formData, options )
+        fetchClassWorks()
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
         console.error( err.stack )
@@ -26,7 +27,7 @@ const fileUpload = async( file ) => {
     }
 }
 
-const Modal = ({ isShowing, hide, file, setFile }) =>
+const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
     isShowing
         ? ReactDOM.createPortal(
               <Container>
@@ -48,7 +49,7 @@ const Modal = ({ isShowing, hide, file, setFile }) =>
                                         <input type="file" onChange={e => setFile(e.target.files[0])}/>
                                   </li>
                                   <li>
-                                        <button type="submit" onClick={e => fileUpload(file)}>Upload</button>
+                                        <button type="submit" onClick={e => fileUpload(file, fetchClassWorks)}>Upload</button>
                                   </li>
                               </ul>
                           </ModalConteudo>
