@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
-import { Main, Container, Top, Section } from './styles'
+import { Main, Container, Top, Section, Button } from './styles'
 
 import Modal from '../Components/Modal'
+// import ModalV2 from '../Components/ModalV2'
 import useModal from '../Components/Modal/useModal'
 
 export default function Home() {
@@ -19,7 +20,10 @@ export default function Home() {
                     </div>
                     <div className='usuario'>
                         <label>TESTE</label>
-                        <MdExitToApp size={16} />
+                        <button>
+                            <MdExitToApp size={16} />
+                        </button>
+                        
                     </div>
                 </header>
 
@@ -39,14 +43,21 @@ export default function Home() {
 
                     <ul>
                         <li className='header-center'>
-                            <div>Titulo do trabalho</div>
-                            <div>Disciplina</div>
-                            <div>Nome do professor</div>
+                            <div className="titulo">Titulo do trabalho</div>
+                            <div className="disciplina">Disciplina</div>
+                            <div className="nomeProfessor">Nome do professor</div>
                         </li>
                         <li className='row-center'>
-                            <div>Recuperação de falhas</div>
-                            <div>Práticas de banco de dados</div>
-                            <div>Adalto</div>
+                            <Button>
+                                <div className="titulo">Recuperação de falhas</div>
+                                <div className="disciplina">Práticas de banco de dados</div>
+                                <div className="nomeProfessor"> Adalto</div>
+                                <div className="buttons">
+                                    <button>Visualizar</button>
+                                    <button>Editar</button>
+                                    <button>Deletar</button>
+                                </div>
+                            </Button>
                         </li>
                     </ul>
                 </Section>
