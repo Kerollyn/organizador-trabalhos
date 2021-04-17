@@ -30,6 +30,10 @@ export const Container = styled.div`
                 margin-right: 5px;
                 font-size: 10px;
             }
+            button{
+                border: none;
+                background-color: #fff;
+            }
         }
     }
 `
@@ -39,7 +43,7 @@ export const Top = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: 70px;
 
     div {
         font-family: 'Roboto';
@@ -49,7 +53,7 @@ export const Top = styled.div`
 
 export const Section = styled.section`
     padding: 20px;
-    height: 85vh;
+    height: 84vh;
     background-color: #ededed;
 
     form {
@@ -69,14 +73,9 @@ export const Section = styled.section`
                 cursor: pointer;
                 font-size: 11px;
                 color: #fff;
-                background-color: #562c19;
-                border-color: #562c19;
-                border-radius: 4px;
-                
-                &:hover {
-                    background-color: #b97415;
-                    border: 1px solid #562c19;
-                }
+                background-color: #9e1a2a;
+                background-color: #9e1a2a;
+                border-radius: 4px;              
             }
         }
     }
@@ -93,25 +92,55 @@ export const Section = styled.section`
             font-size: 12px;
             font-weight: 700;
             border: none;
-        }
-
-        li.row-center {
-            align-items: center;
-            margin-top: 1px;
-            background-color: #fff;
-        }
-
+        }        
         li {
             display: flex;
             flex-direction: row;
             border: 1px solid #ccc;
             div {
                 height: 40px;
-                width: 100%;
+                width: 25%;
                 display: flex;
                 align-items: center;
                 padding: 0 10px;
             }
-        }
+            div.buttons{
+                display: flex;
+                justify-content: flex-end;
+                button{
+                    background-color: #9e1a2a;
+                    color: #fff;
+                    border-radius: 4px;
+                    height: 30px;
+                    width: 90px;
+                    margin-left: 10px;
+                    margin-rigth: 10px;
+                }
+            }
+        }        
     }
 `
+
+export const Button = styled.button`
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 60px;
+    width: 100%;
+    background-color: #fff;
+
+    li.row-center {
+        cursor: pointer;
+        align-items: center;
+        margin-top: 1px;
+        &.selected {
+            color: #fff;
+        }
+    }
+
+    &.selected {
+        background-color: #b97415;
+        color: #fff;
+    }
+`
+

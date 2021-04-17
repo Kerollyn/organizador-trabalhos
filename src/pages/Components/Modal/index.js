@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import {MdFileUpload } from 'react-icons/md'
+import { MdFileUpload } from 'react-icons/md'
 
 import { Container, ModalTeste, ModalConteudo } from './styles'
 import constants from '../../../shared/constants'

@@ -2,7 +2,7 @@ import { React, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Container, Aside, BlockInput, Input } from './styles';
+import { Container, Aside, BlockInput, Input, Button } from './styles';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
@@ -51,10 +51,12 @@ export default function Login() {
                     <br />
 
                     <br />
+                    <Button>
                     <button type='button' onClick={handleSubmit}>Entrar</button>
                     <Link to="/register">
-                        <button type='button'>Cadastro</button>
+                        <button type='button'>Cadastrar</button>
                     </Link>
+                    </Button>
                 </form>
             </Aside>
         </Container>
