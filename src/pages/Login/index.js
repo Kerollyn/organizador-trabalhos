@@ -6,9 +6,7 @@ import { Container, Aside, BlockInput, Input, Button } from './styles';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
-import constants from '../../shared/constants'
-
-const { TOKEN_STORAGE_KEY, BEARER_TOKEN_PREFIX } = constants
+import { setAccessToken } from '../../shared/tokenUtils'
 
 export default function Login() {
 
@@ -24,8 +22,7 @@ export default function Login() {
         })
             .then(res => {
                 const { token } = res.data || {}
-                const bearerToken = `${ BEARER_TOKEN_PREFIX } ${ token }`
-                localStorage.setItem( TOKEN_STORAGE_KEY, bearerToken )
+                setAccessToken( token )
                 history.push("/home");
             })
             .catch(error => {

@@ -4,15 +4,13 @@ import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
 
 import { Container, ModalTeste, ModalConteudo } from './styles'
-import constants from '../../../shared/constants'
-
-const { TOKEN_STORAGE_KEY } = constants
+import { getAccessToken } from '../../../shared/tokenUtils'
 
 const fileUpload = async( file ) => {
     const formData = new FormData()
     formData.append('file', file, file.name)
 
-    const token = localStorage.getItem( TOKEN_STORAGE_KEY )
+    const token = getAccessToken()
     const options = {
         headers: {
             Authorization: token
