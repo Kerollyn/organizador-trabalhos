@@ -6,6 +6,7 @@ import { Main, Container, Top, Section, Button } from './styles'
 import Modal from '../Components/Modal'
 // import ModalV2 from '../Components/ModalV2'
 import useModal from '../Components/Modal/useModal'
+import ClassWorkList from '../Components/ClassWorkList'
 
 export default function Home() {
     const { isShowing, toggle } = useModal()
@@ -41,25 +42,7 @@ export default function Home() {
                         </div>
                     </form>
 
-                    <ul>
-                        <li className='header-center'>
-                            <div className="titulo">Titulo do trabalho</div>
-                            <div className="disciplina">Disciplina</div>
-                            <div className="nomeProfessor">Nome do professor</div>
-                        </li>
-                        <li className='row-center'>
-                            <Button>
-                                <div className="titulo">Recuperação de falhas</div>
-                                <div className="disciplina">Práticas de banco de dados</div>
-                                <div className="nomeProfessor"> Adalto</div>
-                                <div className="buttons">
-                                    <button>Visualizar</button>
-                                    <button>Editar</button>
-                                    <button>Deletar</button>
-                                </div>
-                            </Button>
-                        </li>
-                    </ul>
+                    <ClassWorkList />
                 </Section>
             </Container>
         </Main>
