@@ -12,15 +12,9 @@ export const Container = styled.div`
 export const Aside = styled.aside`
     border: 2px solid #000;
     border-radius: 6px;
-<<<<<<< HEAD
     background-color: #9e1a2a;
     width: 360px;
     height: 350px;
-=======
-    background-color: #668cff;
-    width: 360px;
-    height: 400px;
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
     display: flex;
     justify-content: center;
     form {
@@ -33,7 +27,6 @@ export const Aside = styled.aside`
             margin-bottom: 20px;
             color: #fff;
         }
-<<<<<<< HEAD
         // button {
         //     padding: 5px 50px;
         //     margin-top: 10px;
@@ -46,21 +39,6 @@ export const Aside = styled.aside`
         //     border-radius: 10px;
         //     cursor: pointer;
         // }
-=======
-        button {
-            padding: 5px 50px;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            cursor: pointer;            
-        
-        }
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
     }
 `
 
@@ -72,10 +50,6 @@ export const BlockInput = styled.div`
     label {
         font-size: 16px;
         color: #eee;
-<<<<<<< HEAD
-=======
-
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
     }
 `
 
@@ -87,7 +61,6 @@ export const Input = styled.input`
     font-size: 16px;
     padding: 8px 0 5px 0;
     width: 100%;
-<<<<<<< HEAD
     display: flex;
 `
 
@@ -104,7 +77,5 @@ export const Button = styled.div `
         margin-top: 25px;
         margin-left: 10px;
     }
-=======
->>>>>>> bce814663b61f145f70baa478a778a8421c82776
 
 `
