@@ -5,11 +5,17 @@ import { MdFileUpload } from 'react-icons/md'
 
 import { Container, ModalTeste, ModalConteudo } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
+import { Alert } from 'reactstrap'
 
 const fileUpload = async( file, fetchClassWorks ) => {
-    const formData = new FormData()
-    formData.append('file', file, file.name)
 
+    const formData = new FormData()
+    try {
+        formData.append('file', file, file.name)
+    } catch (e){
+        alert ('Valide se o arquivo foi selecionado!')
+    }
+    
     const token = getAccessToken()
     const options = {
         headers: {
