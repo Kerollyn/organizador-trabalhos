@@ -32,7 +32,7 @@ class Upload extends Component {
             'content-type': 'multipart/form-data'
         }
     }
-    return  post(url, formData,config)
+    return post(url, formData,config)
   }
 
   render() {
