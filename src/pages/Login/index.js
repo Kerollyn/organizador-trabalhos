@@ -3,8 +3,11 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
+
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+
+import { setAccessToken } from '../../shared/tokenUtils'
 
 export default function Login() {
 
@@ -19,8 +22,8 @@ export default function Login() {
             password
         })
             .then(res => {
-                console.log(res)
-                console.log(res.data)
+                const { token } = res.data || {}
+                setAccessToken( token )
                 history.push("/home");
             })
             .catch(error => {
@@ -46,12 +49,19 @@ export default function Login() {
                     <br />
 
                     <br />
+
+                    <button type='button' onClick={handleSubmit}>Entrar</button>
+                    <Link to="/register">
+                        <button type='button'>Cadastro</button>
+                    </Link>
+
                     <Button>
                     <button type='button' onClick={handleSubmit}>Entrar</button>
                     <Link to="/register">
                         <button type='button'>Cadastrar</button>
                     </Link>
                     </Button>
+
                 </form>
             </Aside>
         </Container>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios'
+import React, { useState, useEffect} from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
 import { Main, Container, Top, Section, Button } from './styles'
@@ -6,10 +7,35 @@ import { Main, Container, Top, Section, Button } from './styles'
 import Modal from '../Components/Modal'
 // import ModalV2 from '../Components/ModalV2'
 import useModal from '../Components/Modal/useModal'
+import ClassWorkList from '../Components/ClassWorkList'
+
+import constants from '../../shared/constants'
+import { getAccessToken } from '../../shared/tokenUtils'
+
+const { API_BASE_URL } = constants
+
+const fetchClassWorkList = ( setOngoingList, setDoneList ) => {
+    axios.get( `${ API_BASE_URL }/classworks`, { headers: { Authorization: getAccessToken() } } )
+        .then( response => {
+            const classWorks = response.data
+            setOngoingList( classWorks.ongoing )
+            setDoneList( classWorks.finished )
+        } ).catch( ( error ) => {
+            console.error( error )
+        } )
+}
 
 export default function Home() {
     const { isShowing, toggle } = useModal()
     const [file, setFile] = useState([])
+    const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
+    const [classWorkDoneList, setClassWorkDoneList] = useState([])
+
+    useEffect( () => {
+        if ( !classWorkOngoingList.length && !classWorkDoneList.length ) {
+            fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
+        }
+    }, [classWorkOngoingList, classWorkDoneList] )
 
     return (
         <Main>
@@ -37,29 +63,17 @@ export default function Home() {
                             <button type='button' onClick={toggle}>
                                 Upload
                             </button>
-                            <Modal isShowing={isShowing} hide={toggle} file={file} setFile={setFile} />
+                            <Modal
+                                isShowing={isShowing}
+                                hide={toggle}
+                                file={file}
+                                setFile={setFile}
+                                fetchClassWorks={() => fetchClassWorkList(setClassWorkOngoingList, setClassWorkDoneList)}
+                            />
                         </div>
                     </form>
 
-                    <ul>
-                        <li className='header-center'>
-                            <div className="titulo">Titulo do trabalho</div>
-                            <div className="disciplina">Disciplina</div>
-                            <div className="nomeProfessor">Nome do professor</div>
-                        </li>
-                        <li className='row-center'>
-                            <Button>
-                                <div className="titulo">Recuperação de falhas</div>
-                                <div className="disciplina">Práticas de banco de dados</div>
-                                <div className="nomeProfessor"> Adalto</div>
-                                <div className="buttons">
-                                    <button>Visualizar</button>
-                                    <button>Editar</button>
-                                    <button>Deletar</button>
-                                </div>
-                            </Button>
-                        </li>
-                    </ul>
+                    <ClassWorkList ongoingList={classWorkOngoingList}/>
                 </Section>
             </Container>
         </Main>

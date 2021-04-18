@@ -18,6 +18,7 @@ class Upload extends Component {
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
       console.log(response.data);
+      this.setState(file,null);
     })
   }
   onChange(e) {
@@ -32,7 +33,7 @@ class Upload extends Component {
             'content-type': 'multipart/form-data'
         }
     }
-    return  post(url, formData,config)
+    return post(url, formData,config)
   }
 
   render() {

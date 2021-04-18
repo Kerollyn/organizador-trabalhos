@@ -3,22 +3,41 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
 
+<<<<<<< HEAD
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
+=======
+import { Container, ModalTeste, ModalConteudo } from './styles'
+import { getAccessToken } from '../../../shared/tokenUtils'
+import { Alert } from 'reactstrap'
 
-const fileUpload = ( file ) => {
+const fileUpload = async( file, fetchClassWorks ) => {
+>>>>>>> 18e52af647265864809f57e73b2280f01e8a5b4a
+
     const formData = new FormData()
-    formData.append('file', file, file.name)
-    axios.post(
-        'https://heroku-org-trabalhos-api.herokuapp.com/classworks',
-        formData,
-        {
-            headers:
-                {Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzMGI5NjQwLTkyOTItMTFlYi1hZTdjLWVmMjBjMTgxZmIwMSIsInVzZXJOYW1lIjoiamF2aSIsImlhdCI6MTYxNzcxOTIzNH0.sOnNN7Uj2omHqy6eEVJ0IX0_934KNrFp_Izf_hghCxLQqCcfZfnjbCAp1z5SgOjGmA1ARTyMhxFPKqhhy0mKu0_L2cQEv3MDDCczVt7mhPXFDqgV31KaBjb13oh9Y5Ah5glGVe3UADMfz_hB8EBNT7GUeYwiwFPDpHFLOG-qSGHCwRANrgVZngHe_BM6Z67-a8Sx4zfqBulX8fVlHkphhxZrp4v07gPcCFqgOfqGJw0Cvxinv6miKmKGQGV7jPEQf1i9IAb4eU1qWktGy1Vj6KLIdhsOikAlbHJXS-C_cbfLfTjnlwOxrgvopSviomM5NH63XmrdMFSqigCgP-4PCFToxacb4B49wVAvKnai5O6Nj8WIafnENQnVh8ko8ec_ULIgFX9l8PiLkXIDcqHoe0qHhVsNGKrpXC-dY9kviC-L5bF2FWXsFltzUBpOCwyoro-4uUHEXNkCTks_qpNrTMPJ8_7BHQxRmaEjiX-u6z6vYvF5-14vEMDjd0p8a0Nym7_ToFf137b9wHp22NnammTl16LOaG4udnhdb6c7hAsY2Mmnuk97Jowt9nHPeTSRUYd8uovRxCAPZPGW93A46VmDMoHxcKyzHbvvW6vOge1MrX07KoDPhXVV36FLvbcFom_xTmVDthwHQGCP73nc2hjcdrGxUumCkHEuhvRPqGk'}
+    try {
+        formData.append('file', file, file.name)
+    } catch (e){
+        alert ('Valide se o arquivo foi selecionado!')
+    }
+    
+    const token = getAccessToken()
+    const options = {
+        headers: {
+            Authorization: token
         }
-    )
+    }
+    const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
+    try {
+        await axios.post( url, formData, options )
+        fetchClassWorks()
+        alert('Arquivo salvo com sucesso!')
+    } catch( err ) {
+        console.error( err.stack )
+        alert('Ocorreu um erro ao tentar enviar o arquivo.')
+    }
 }
 
-const Modal = ({ isShowing, hide, file, setFile }) =>
+const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
     isShowing
         ? ReactDOM.createPortal(
               <Container>
@@ -38,6 +57,7 @@ const Modal = ({ isShowing, hide, file, setFile }) =>
                                     </li>
                                     <li>
                                         <input type="file" onChange={e => setFile(e.target.files[0])}/>
+<<<<<<< HEAD
                                     </li>
                                     <li>
                                         <BlockInput>
@@ -62,6 +82,12 @@ const Modal = ({ isShowing, hide, file, setFile }) =>
                                     <li>
                                         <button type="submit" onClick={e => fileUpload(file)}>Upload</button>
                                     </li>
+=======
+                                  </li>
+                                  <li>
+                                        <button type="submit" onClick={e => fileUpload(file, fetchClassWorks)}>Upload</button>
+                                  </li>
+>>>>>>> 18e52af647265864809f57e73b2280f01e8a5b4a
                               </ul>
                           </ModalConteudo>
                       </div>
