@@ -28,6 +28,7 @@ export const ModalTeste = styled.div`
     overflow-y: auto;
     outline: 0;
     display: flex;
+
     div.modal {
         display: flex;
         flex-direction: column;
@@ -37,17 +38,18 @@ export const ModalTeste = styled.div`
         position: relative;
         margin: 6.95rem auto;
 
-        min-width: 500px;
-        width: 500px;
-        height: 200px;
+        min-width: 450px;
+        width: 450px;
+        height: 380px;
         padding: 15px;
 
         border-radius: 5px;
         box-shadow: 0 5px 15px rgb(0 0 0 / 50%);
+        
         div.modal-button {
             display: flex;
             justify-content: flex-end;
-            alignItems: "center"
+            alignItems: "center";
             button {
                 background-color: #fff;
                 color: #6d6d6d;
@@ -73,6 +75,8 @@ export const ModalConteudo = styled.div`
             margin-top: 15px;
 
             button {
+                margin-top: 5px;
+                margin-left: 240px;
                 background-color: #9e1a2a;
                 color: #fff;
                 padding: 6px 12px;
@@ -86,4 +90,23 @@ export const ModalConteudo = styled.div`
         
         
     }
+`
+
+export const BlockInput = styled.div`
+    & + & {
+        margin-top: 6px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+`
+
+export const Input = styled.input`
+    color: #000;
+    border: 1px solid #9e9e9e;
+    border-radius: 4px;
+    display: flex;
+    height: 23px;
+    width: 300px;   
 `
