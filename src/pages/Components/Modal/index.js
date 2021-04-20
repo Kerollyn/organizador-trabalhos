@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
 
-import { Container, ModalTeste, ModalConteudo } from './styles'
+import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
-import { Alert } from 'reactstrap'
+import { Alert } from 'reactstrap';
 
-const fileUpload = async( file, fetchClassWorks ) => {
 
+const fileUpload = async(file, fetchClassWorks) => {
     const formData = new FormData()
     try {
         formData.append('file', file, file.name)
@@ -53,10 +53,30 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
                                     </li>
                                     <li>
                                         <input type="file" onChange={e => setFile(e.target.files[0])}/>
-                                  </li>
-                                  <li>
-                                        <button type="submit" onClick={e => fileUpload(file, fetchClassWorks)}>Upload</button>
-                                  </li>
+                                    </li>
+                                    <li>
+                                        <BlockInput>
+                                            <label>Titulo do trabalho</label>
+                                            <Input/>
+                                       </BlockInput>
+                                       
+                                    </li>
+                                    <li>
+                                        <BlockInput>
+                                            <label>Disciplina</label>
+                                            <Input/>
+                                        </BlockInput>
+                                    </li>
+                                    <li>
+                                        <BlockInput>
+                                            <label>Nome do professor</label>
+                                            <Input/>
+                                        </BlockInput>
+                                        
+                                    </li>
+                                    <li>
+                                        <button type="submit" onClick={e => fileUpload(file)}>Upload</button>
+                                    </li>
                               </ul>
                           </ModalConteudo>
                       </div>
