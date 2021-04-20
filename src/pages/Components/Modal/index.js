@@ -3,16 +3,12 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
 
-<<<<<<< HEAD
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
-=======
-import { Container, ModalTeste, ModalConteudo } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
-import { Alert } from 'reactstrap'
+import { Alert } from 'reactstrap';
 
-const fileUpload = async( file, fetchClassWorks ) => {
->>>>>>> 18e52af647265864809f57e73b2280f01e8a5b4a
 
+const fileUpload = async(file, fetchClassWorks) => {
     const formData = new FormData()
     try {
         formData.append('file', file, file.name)
@@ -57,7 +53,6 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
                                     </li>
                                     <li>
                                         <input type="file" onChange={e => setFile(e.target.files[0])}/>
-<<<<<<< HEAD
                                     </li>
                                     <li>
                                         <BlockInput>
@@ -82,12 +77,6 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
                                     <li>
                                         <button type="submit" onClick={e => fileUpload(file)}>Upload</button>
                                     </li>
-=======
-                                  </li>
-                                  <li>
-                                        <button type="submit" onClick={e => fileUpload(file, fetchClassWorks)}>Upload</button>
-                                  </li>
->>>>>>> 18e52af647265864809f57e73b2280f01e8a5b4a
                               </ul>
                           </ModalConteudo>
                       </div>
