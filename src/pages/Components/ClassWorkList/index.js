@@ -4,9 +4,9 @@ const buildWorkLists = ( classWorkLists, classWorkStatus ) => {
     const list = Object.keys( classWorkLists ).find( ( item ) => item === classWorkStatus )
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
-                title={'Trabalho sem nome'}
-                subject={'a definir disciplina'}
-                professor={'a definir professor'}
+                title={classWork.title}
+                subject={classWork.subject}
+                professor={classWork.professorName}
                 fileName={classWork.fileName}
                 key={ `ongoing-${ index }` }
             />

@@ -14,12 +14,20 @@ import { getAccessToken } from '../../shared/tokenUtils'
 
 const { API_BASE_URL } = constants
 
-const fetchClassWorkList = ( setOngoingList, setDoneList ) => {
-    axios.get( `${ API_BASE_URL }/classworks`, { headers: { Authorization: getAccessToken() } } )
+const _fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList ) => {
+        return axios.get( `${ API_BASE_URL }/classworks`, { headers: { Authorization: getAccessToken() } } )
         .then( response => {
             const classWorks = response.data
-            setOngoingList( classWorks.ongoing )
-            setDoneList( classWorks.finished )
+            const [ classWorkOngoingListFirstItem ] = classWorkOngoingList
+            const [ fetchedOngoingListFirstItem ] = classWorks.ongoing
+            const [ classWorkDoneListFisrtItem ] = classWorkDoneList
+            const [ fetchedDoneListFirstItem ] = classWorks.finished
+            if(classWorkOngoingListFirstItem?.id !== fetchedOngoingListFirstItem?.id ) {
+                setClassWorkOngoingList( classWorks.ongoing )
+            }
+            if(classWorkDoneListFisrtItem?.id !== fetchedDoneListFirstItem?.id) {
+                setClassWorkDoneList( classWorks.finished )
+            }
         } ).catch( ( error ) => {
             console.error( error )
         } )
@@ -31,11 +39,12 @@ export default function Home() {
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
 
+    const fetchClassWorkList = _fetchClassWorkList.bind(null, classWorkOngoingList, classWorkDoneList )
+
     useEffect( () => {
-        if ( !classWorkOngoingList.length && !classWorkDoneList.length ) {
-            fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
-        }
+        fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
     }, [classWorkOngoingList, classWorkDoneList] )
+    fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
 
     return (
         <Main>

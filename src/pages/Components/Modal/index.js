@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
@@ -8,10 +8,14 @@ import { getAccessToken } from '../../../shared/tokenUtils'
 import { Alert } from 'reactstrap';
 
 
-const fileUpload = async(file, fetchClassWorks) => {
+const fileUpload = async({file, title, subject, professor, fetchClassWorks}) => {
+    console.log( 'FAZENDO UPLOAD !!! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' )
     const formData = new FormData()
     try {
         formData.append('file', file, file.name)
+        formData.append('title', title)
+        formData.append('subject', subject)
+        formData.append('professorName', professor)
     } catch (e){
         alert ('Valide se o arquivo foi selecionado!')
     }
@@ -33,21 +37,25 @@ const fileUpload = async(file, fetchClassWorks) => {
     }
 }
 
-const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
-    isShowing
-        ? ReactDOM.createPortal(
-              <Container>
-                  <div className='modal-fundo' />
-                  <ModalTeste>
-                      <div className='modal'>
-                          <div className='modal-button'>
-                              <button type='button' onClick={hide}>
-                                  <span aria-hidden='true'>&times;</span>
-                              </button>
-                          </div>
+const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) => {
+    const [title, setTitle] = useState([])
+    const [professor, setProfessor] = useState([])
+    const [subject, setSubject] = useState([])
 
-                          <ModalConteudo>
-                              <ul>
+    return isShowing
+        ? ReactDOM.createPortal(
+                <Container>
+                    <div className='modal-fundo' />
+                    <ModalTeste>
+                        <div className='modal'>
+                            <div className='modal-button'>
+                                <button type='button' onClick={hide}>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>
+
+                            <ModalConteudo>
+                                <ul>
                                     <li>
                                         <MdFileUpload size={50}/>
                                     </li>
@@ -57,33 +65,32 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input/>
-                                       </BlockInput>
-                                       
+                                            <Input onChange={e => setTitle(e.target.value)}/>
+                                        </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Disciplina</label>
-                                            <Input/>
+                                            <Input onChange={e => setSubject(e.target.value)}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Nome do professor</label>
-                                            <Input/>
+                                            <Input onChange={e => setProfessor(e.target.value)}/>
                                         </BlockInput>
                                         
                                     </li>
                                     <li>
-                                        <button type="submit" onClick={e => fileUpload(file)}>Upload</button>
+                                        <button type="submit" onClick={e => fileUpload({file, title, subject, professor, fetchClassWorks})}>Upload</button>
                                     </li>
-                              </ul>
-                          </ModalConteudo>
-                      </div>
-                  </ModalTeste>
-              </Container>,
-              document.body
-          )
+                                </ul>
+                            </ModalConteudo>
+                        </div>
+                    </ModalTeste>
+                </Container>,
+                document.body
+            )
         : null
-
+}
 export default Modal
