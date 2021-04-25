@@ -1,6 +1,26 @@
 import { Button } from './styles'
+import { getAccessToken } from '../../../shared/tokenUtils'
+import axios from 'axios'
 
-const ClassWorkListItem = ( { title, subject, professor, fileName } ) => {
+const deletefile = async( id ,fetchClassWorks) => {
+    const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks/'+id;
+    console.log("URL Deleção: "+url);
+    const token = getAccessToken()
+    const options = {
+        headers: {
+            Authorization: token
+        }
+    }
+    try {
+        await axios.delete( url, options )
+        fetchClassWorks()
+    } catch( err ) {
+        console.error( err.stack )
+        alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
+    }
+}
+const ClassWorkListItem = ( { id, title, subject, professor, fileName, fetchClassWorks } ) => {
+
 return ( 
     <li className='row-center'>
         <Button>
@@ -11,7 +31,7 @@ return (
             <div className="buttons">
                 <button>Visualizar</button>
                 <button>Editar</button>
-                <button>Deletar</button>
+                <button onClick={()=>deletefile(id,fetchClassWorks)}>Deletar </button>
             </div>
         </Button>
     </li>

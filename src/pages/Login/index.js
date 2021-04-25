@@ -47,13 +47,7 @@ export default function Login() {
                         <Input name='password' type='password' value={password} onChange={e => setPassword(e.target.value)} />
                     </BlockInput>
                     <br />
-
                     <br />
-
-                    <button type='button' onClick={handleSubmit}>Entrar</button>
-                    <Link to="/register">
-                        <button type='button'>Cadastro</button>
-                    </Link>
 
                     <Button>
                     <button type='button' onClick={handleSubmit}>Entrar</button>
