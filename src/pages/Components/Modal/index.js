@@ -6,10 +6,8 @@ import { MdFileUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
 
 import { getAccessToken } from '../../../shared/tokenUtils'
-import { Alert } from 'reactstrap';
 
 const fileUpload = async({file, title, subject, professor, fetchClassWorks}) => {
-    console.log( 'FAZENDO UPLOAD !!! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' )
     const formData = new FormData()
     try {
         formData.append('file', file, file.name)

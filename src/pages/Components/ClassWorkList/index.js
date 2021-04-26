@@ -26,7 +26,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [],fetchClassWorks } ) =>
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    <div className="nomeProfessor">Arquivo</div>
+                    {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
                 { buildWorkLists( classWorkLists, 'ongoingList' ,fetchClassWorks) }
@@ -37,7 +37,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [],fetchClassWorks } ) =>
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    <div className="nomeProfessor">Arquivo</div>
+                    {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
                 { buildWorkLists( classWorkLists, 'doneList',fetchClassWorks ) }

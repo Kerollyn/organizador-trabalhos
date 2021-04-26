@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect} from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
-import { Main, Container, Top, Section, Button } from './styles'
+import { Main, Container, Top, Section } from './styles'
 
 import Modal from '../Components/Modal'
 // import ModalV2 from '../Components/ModalV2'
@@ -43,7 +43,7 @@ export default function Home() {
 
     useEffect( () => {
         fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
-    }, [classWorkOngoingList, classWorkDoneList] )
+    }, [classWorkOngoingList, classWorkDoneList, fetchClassWorkList] )
     fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
 
     return (

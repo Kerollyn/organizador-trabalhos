@@ -19,7 +19,7 @@ const deletefile = async( id ,fetchClassWorks) => {
         alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
     }
 }
-const ClassWorkListItem = ( { id, title, subject, professor, fileName, fetchClassWorks } ) => {
+const ClassWorkListItem = ( { id, title, subject, professor, fetchClassWorks } ) => {
 
 return ( 
     <li className='row-center'>
@@ -27,7 +27,7 @@ return (
             <div className="titulo">{title}</div>
             <div className="disciplina">{subject}</div>
             <div className="nomeProfessor">{professor}</div>
-            <div className="arquivo">{fileName}</div>
+            {/* <div className="arquivo">{fileName}</div> */}
             <div className="buttons">
                 <button>Visualizar</button>
                 <button>Editar</button>
