@@ -1,6 +1,6 @@
 import ClassWorkListItem from '../ClassWorkListItem'
 
-const buildWorkLists = ( classWorkLists, classWorkStatus, fetchClassWorks ) => {
+const buildWorkLists = ( classWorkLists, classWorkStatus, fetchClassWorks, cloudStorageFileName ) => {
     const list = Object.keys( classWorkLists ).find( ( item ) => item === classWorkStatus )
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
@@ -11,11 +11,12 @@ const buildWorkLists = ( classWorkLists, classWorkStatus, fetchClassWorks ) => {
                 id={classWork.id}
                 key={ `ongoing-${ index }` }
                 fetchClassWorks={fetchClassWorks}
+                cloudStorageFileName={classWork.cloudStorageFileName}
             />
     } )
 }
 
-const ClassWorkList = ( { ongoingList = [], doneList = [],fetchClassWorks } ) => {
+const ClassWorkList = ( { ongoingList = [], doneList = [], fetchClassWorks } ) => {
     const classWorkLists = { ongoingList, doneList }
 
     return (
@@ -29,7 +30,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [],fetchClassWorks } ) =>
                     {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'ongoingList' ,fetchClassWorks) }
+                { buildWorkLists( classWorkLists, 'ongoingList' ,fetchClassWorks ) }
             </ul>
             <h1>Concluídos</h1>
             <ul>
@@ -40,7 +41,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [],fetchClassWorks } ) =>
                     {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'doneList',fetchClassWorks ) }
+                { buildWorkLists( classWorkLists, 'doneList', fetchClassWorks ) }
             </ul>
         </>
     )

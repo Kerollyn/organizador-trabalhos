@@ -82,8 +82,10 @@ export default function Home() {
                         </div>
                     </form>
 
-                    <ClassWorkList ongoingList={classWorkOngoingList}
-                    fetchClassWorks={() => fetchClassWorkList(setClassWorkOngoingList, setClassWorkDoneList)}/>
+                    <ClassWorkList
+                        ongoingList={classWorkOngoingList}
+                        fetchClassWorks={() => fetchClassWorkList(setClassWorkOngoingList, setClassWorkDoneList)}
+                    />
                 </Section>
             </Container>
         </Main>
