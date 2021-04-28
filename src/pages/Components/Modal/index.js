@@ -5,7 +5,7 @@ import { MdFileUpload } from 'react-icons/md'
 
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
-import { Alert } from 'reactstrap';
+// import { Alert } from 'reactstrap';
 
 
 const fileUpload = async(file, fetchClassWorks) => {
@@ -71,8 +71,13 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) =>
                                         <BlockInput>
                                             <label>Nome do professor</label>
                                             <Input/>
-                                        </BlockInput>
-                                        
+                                        </BlockInput>                                        
+                                    </li>
+                                    <li>
+                                        <BlockInput>
+                                            <label>Data para entrega</label>
+                                            <Input type="date"/>
+                                        </BlockInput>                                        
                                     </li>
                                     <li>
                                         <button type="submit" onClick={e => fileUpload(file)}>Upload</button>

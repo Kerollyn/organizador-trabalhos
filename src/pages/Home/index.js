@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect} from 'react';
 import { MdExitToApp} from 'react-icons/md'
 
-import { Main, Container, Top, Section, Button } from './styles'
+import { Main, Container, Top, Section } from './styles'
 
 import Modal from '../Components/Modal'
 // import ModalV2 from '../Components/ModalV2'
@@ -11,6 +11,7 @@ import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
 import { getAccessToken } from '../../shared/tokenUtils'
+import { Link } from 'react-router-dom';
 
 const { API_BASE_URL } = constants
 
@@ -46,9 +47,9 @@ export default function Home() {
                     </div>
                     <div className='usuario'>
                         <label>TESTE</label>
-                        <button>
+                        <Link to="/">
                             <MdExitToApp size={16} />
-                        </button>
+                        </Link>
                         
                     </div>
                 </header>

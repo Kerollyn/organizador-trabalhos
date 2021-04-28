@@ -30,20 +30,6 @@ export const Aside = styled.aside`
             font-size: 18px;
             text-align: center;
         }
-        button {
-            background-color: #821623;
-            padding: 8px 12px;
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;            
-        
-        }
     }
 `
 
@@ -67,4 +53,22 @@ export const Input = styled.input`
     padding: 8px 0 5px 0;
     width: 100%;
     display: flex;   
+`
+
+export const Button = styled.div `
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+
+    button{
+        background-color: #821623;
+        color: #fff;
+        height: 35px;
+        width: 100px;
+        border-radius: 4px;
+        margin-left: 5px;
+    }
+
+   
+
 `

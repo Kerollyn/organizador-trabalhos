@@ -26,6 +26,7 @@ export const Aside = styled.aside`
         strong {
             margin-bottom: 20px;
             color: #fff;
+            text-align: center;
         }
         // button {
         //     padding: 5px 50px;
@@ -65,8 +66,9 @@ export const Input = styled.input`
 `
 
 export const Button = styled.div `
+    margin-top: 45px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 
     button{
         background-color: #821623;
@@ -74,8 +76,8 @@ export const Button = styled.div `
         height: 35px;
         width: 100px;
         border-radius: 4px;
-        margin-top: 25px;
-        margin-left: 10px;
+        /* margin-top: 25px; */
+        margin-left: 5px;
     }
 
 `

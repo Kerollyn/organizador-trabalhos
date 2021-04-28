@@ -9,7 +9,7 @@ export const Container = styled.div`
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 1040;
+        z-index: 1000;
         width: 100vw;
         height: 100vh;
         background-color: #333;
@@ -23,9 +23,9 @@ export const ModalTeste = styled.div`
     left: 0;
     z-index: 1050;
     width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /* height: 100%; */
+     overflow-x: hidden; 
+    /* overflow-y: auto; */
     outline: 0;
     display: flex;
 
@@ -33,14 +33,14 @@ export const ModalTeste = styled.div`
         display: flex;
         flex-direction: column;
 
-        z-index: 100;
+        /* z-index: 100; */
         background: #ffff;
         position: relative;
-        margin: 6.95rem auto;
+        margin: 6.1rem auto;
 
         min-width: 450px;
         width: 450px;
-        height: 380px;
+        height: 420px;
         padding: 15px;
 
         border-radius: 5px;
@@ -49,7 +49,6 @@ export const ModalTeste = styled.div`
         div.modal-button {
             display: flex;
             justify-content: flex-end;
-            alignItems: "center";
             button {
                 background-color: #fff;
                 color: #6d6d6d;

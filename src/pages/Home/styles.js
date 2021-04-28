@@ -43,7 +43,7 @@ export const Top = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 50px;
 
     div {
         font-family: 'Roboto';
@@ -53,7 +53,7 @@ export const Top = styled.div`
 
 export const Section = styled.section`
     padding: 20px;
-    height: 84vh;
+    height: 87vh;
     background-color: #ededed;
 
     form {
@@ -121,26 +121,26 @@ export const Section = styled.section`
     }
 `
 
-export const Button = styled.button`
-    display: flex;
-    align-items: center;
-    border: none;
-    height: 60px;
-    width: 100%;
-    background-color: #fff;
+// export const Button = styled.button`
+//     display: flex;
+//     align-items: center;
+//     border: none;
+//     height: 60px;
+//     width: 100%;
+//     background-color: #fff;
 
-    li.row-center {
-        cursor: pointer;
-        align-items: center;
-        margin-top: 1px;
-        &.selected {
-            color: #fff;
-        }
-    }
+//     li.row-center {
+//         cursor: pointer;
+//         align-items: center;
+//         margin-top: 1px;
+//         &.selected {
+//             color: #fff;
+//         }
+//     }
 
-    &.selected {
-        background-color: #b97415;
-        color: #fff;
-    }
-`
+//     &.selected {
+//         background-color: #b97415;
+//         color: #fff;
+//     }
+// `
 

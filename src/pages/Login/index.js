@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
@@ -46,14 +45,12 @@ export default function Login() {
                         <label>Senha</label>
                         <Input name='password' type='password' value={password} onChange={e => setPassword(e.target.value)} />
                     </BlockInput>
-                    <br />
-                    <br />
-
+    
                     <Button>
-                    <button type='button' onClick={handleSubmit}>Entrar</button>
-                    <Link to="/register">
-                        <button type='button'>Cadastrar</button>
-                    </Link>
+                        <button type='button' onClick={handleSubmit}>Entrar</button>
+                        <Link to="/register">
+                            <button type='button'>Cadastrar</button>
+                        </Link>
                     </Button>
 
                 </form>

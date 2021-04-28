@@ -1,8 +1,10 @@
 import { React, useState } from "react"; 
+import { Link } from "react-router-dom";
 
-import { Container, Aside, BlockInput, Input } from './styles';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+
+import { Container, Aside, BlockInput, Input, Button } from './styles';
 
 export default function SingUp () {
 
@@ -51,11 +53,15 @@ export default function SingUp () {
                         <label>Repita a senha</label>
                         <Input type='password' value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)}/>
                     </BlockInput>
-                    <br />
+                    {/* <br />
+                    <br /> */}
 
-                    <br />
-                    <button type='button' onClick={handleSubmit}>Cadastrar</button>
-
+                    <Button>
+                        <button type='button' onClick={handleSubmit}>Cadastrar</button>
+                        <Link to="/">
+                            <button type='button'>Cancelar</button>
+                        </Link> 
+                    </Button>
                 </form>
             </Aside>
         </Container>
