@@ -1,19 +1,22 @@
 import ClassWorkListItem from '../ClassWorkListItem'
 
-const buildWorkLists = ( classWorkLists, classWorkStatus ) => {
+const buildWorkLists = ( classWorkLists, classWorkStatus, fetchClassWorks, cloudStorageFileName ) => {
     const list = Object.keys( classWorkLists ).find( ( item ) => item === classWorkStatus )
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
-                title={'Trabalho sem nome'}
-                subject={'a definir disciplina'}
-                professor={'a definir professor'}
+                title={classWork.title}
+                subject={classWork.subject}
+                professor={classWork.professorName}
                 fileName={classWork.fileName}
+                id={classWork.id}
                 key={ `ongoing-${ index }` }
+                fetchClassWorks={fetchClassWorks}
+                cloudStorageFileName={classWork.cloudStorageFileName}
             />
     } )
 }
 
-const ClassWorkList = ( { ongoingList = [], doneList = [] } ) => {
+const ClassWorkList = ( { ongoingList = [], doneList = [], fetchClassWorks } ) => {
     const classWorkLists = { ongoingList, doneList }
 
     return (
@@ -24,10 +27,10 @@ const ClassWorkList = ( { ongoingList = [], doneList = [] } ) => {
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    <div className="nomeProfessor">Arquivo</div>
+                    {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'ongoingList' ) }
+                { buildWorkLists( classWorkLists, 'ongoingList' ,fetchClassWorks ) }
             </ul>
             <h1>Concluídos</h1>
             <ul>
@@ -35,10 +38,10 @@ const ClassWorkList = ( { ongoingList = [], doneList = [] } ) => {
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    <div className="nomeProfessor">Arquivo</div>
+                    {/* <div className="nomeProfessor">Arquivo</div> */}
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'doneList' ) }
+                { buildWorkLists( classWorkLists, 'doneList', fetchClassWorks ) }
             </ul>
         </>
     )
