@@ -108,13 +108,3 @@ export const Input = styled.input`
     height: 23px;
     width: 300px;   
 `
-
-export const TextArea = styled.textarea`
-    color: #000;
-    border: 1px solid #9e9e9e;
-    border-radius: 4px;
-    display: flex;
-    height: 100px;
-    width: 300px;
-    resize: none;
-`

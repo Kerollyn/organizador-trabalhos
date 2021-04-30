@@ -29,6 +29,7 @@ return (
             <div className="nomeProfessor">{professor}</div>
             <div className="buttons">
                 <button>Visualizar</button>
+                <button>Detalhes</button>
                 <button>Editar</button>
                 <button onClick={()=>deleteFile(id, cloudStorageFileName, fetchClassWorks)}>Deletar </button>
             </div>

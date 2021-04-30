@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 
-import { Container, ModalTeste, ModalConteudo, BlockInput, Input, TextArea } from './styles'
+import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
 
 const Modal = ({ isShowing, hide }) =>
     isShowing
@@ -38,8 +38,8 @@ const Modal = ({ isShowing, hide }) =>
                                     
                                     <li>
                                         <BlockInput>
-                                            <label>Descrição do trabalho</label>
-                                            <TextArea className="descricao"/>
+                                            <label>Data de entrega</label>
+                                            <Input type="date"/>
                                         </BlockInput>
                                     </li>
                                     <li>
