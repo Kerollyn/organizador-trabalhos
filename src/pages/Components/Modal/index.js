@@ -9,15 +9,17 @@ import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './style
 import { getAccessToken } from '../../../shared/tokenUtils'
 
 const fileUpload = async({file, title, subject, professor, fetchClassWorks}) => {
+    const formIsFulfilled = title && subject && file && professor
+
+    if( !formIsFulfilled ) {
+        return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
+    }
+
     const formData = new FormData()
-    try {
         formData.append('file', file, file.name)
         formData.append('title', title)
         formData.append('subject', subject)
         formData.append('professorName', professor)
-    } catch (e){
-        alert ('Valide se o arquivo foi selecionado!')
-    }
     
     const token = getAccessToken()
     const options = {
@@ -76,7 +78,7 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) => {
                                     <li>
                                         <BlockInput>
                                             <label>Nome do professor</label>
-                                            <Input/>
+                                            <Input onChange={e => setProfessor(e.target.value)}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
@@ -86,7 +88,7 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) => {
                                         </BlockInput>                                        
                                     </li>
                                     <li>
-                                        <button type="submit" onClick={e => fileUpload({file, title, subject, professor, fetchClassWorks})}>Upload</button>
+                                        <button type="submit" onClick={() => fileUpload({file, title, subject, professor, fetchClassWorks})}>Upload</button>
                                     </li>
 
                                 </ul>
