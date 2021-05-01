@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import { MdFileUpload } from 'react-icons/md'
 
-import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
+import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
 // import { Alert } from 'reactstrap';
 
 import { getAccessToken } from '../../../shared/tokenUtils'
@@ -96,6 +96,15 @@ const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
                                             <label>Data para entrega</label>
                                             <Input type="date"/>
                                         </BlockInput>                                        
+                                    </li>
+                                      <li>
+                                        <BlockInput>   
+                                            <label>Status do trabalho</label>
+                                            <Select>
+                                                <option>Em andamento</option>
+                                                <option>Concluido</option>
+                                            </Select>
+                                        </BlockInput>
                                     </li>
                                     <li>
                                         <button type="submit" onClick={
