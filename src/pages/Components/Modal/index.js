@@ -8,29 +8,39 @@ import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './style
 
 import { getAccessToken } from '../../../shared/tokenUtils'
 
-const fileUpload = async({file, title, subject, professor, fetchClassWorks}) => {
-    const formIsFulfilled = title && subject && file && professor
+const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
 
-    if( !formIsFulfilled ) {
-        return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
-    }
+const cleanup = ( { setProfessor, setTitle, setSubject, setFile }  ) =>  {
+    setProfessor( [] )
+    setTitle( [] )
+    setSubject( [] )
+    setFile( [] )
+}
 
-    const formData = new FormData()
-        formData.append('file', file, file.name)
-        formData.append('title', title)
-        formData.append('subject', subject)
-        formData.append('professorName', professor)
-    
-    const token = getAccessToken()
-    const options = {
-        headers: {
-            Authorization: token
-        }
-    }
-    const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
+const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswork}) => {
+    const fieldsToValidate = [ file, title, subject, professor ]
     try {
-        await axios.post( url, formData, options )
-        fetchClassWorks()
+        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
+
+        if( !formIsFulfilled ) {
+            return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
+        }
+
+        const formData = new FormData()
+            formData.append('file', file, file.name)
+            formData.append('title', title)
+            formData.append('subject', subject)
+            formData.append('professorName', professor)
+        
+        const token = getAccessToken()
+        const options = {
+            headers: {
+                Authorization: token
+            }
+        }
+        const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
+        const newClasswork = ( await axios.post( url, formData, options ) ).data
+        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: 'ongoing', method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
         console.error( err.stack )
@@ -38,7 +48,7 @@ const fileUpload = async({file, title, subject, professor, fetchClassWorks}) => 
     }
 }
 
-const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) => {
+const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
     const [title, setTitle] = useState([])
     const [professor, setProfessor] = useState([])
     const [subject, setSubject] = useState([])
@@ -88,7 +98,12 @@ const Modal = ({ isShowing, hide, file, setFile, fetchClassWorks }) => {
                                         </BlockInput>                                        
                                     </li>
                                     <li>
-                                        <button type="submit" onClick={() => fileUpload({file, title, subject, professor, fetchClassWorks})}>Upload</button>
+                                        <button type="submit" onClick={
+                                            () => fileUpload({file, title, subject, professor, insertOrRemoveClasswork})
+                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle } ) )
+                                            }>
+                                            Upload
+                                        </button>
                                     </li>
 
                                 </ul>
