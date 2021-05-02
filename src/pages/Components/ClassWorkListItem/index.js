@@ -31,7 +31,7 @@ return (
                 <button>Visualizar</button>
                 <button>Detalhes</button>
                 <button>Editar</button>
-                <button onClick={()=>deleteFile(id, cloudStorageFileName, fetchClassWorks)}>Deletar </button>
+                <button onClick={()=> { if(window.confirm('Deseja deletar este arquivo?')) deleteFile(id, cloudStorageFileName, fetchClassWorks)}}>Deletar </button>
             </div>
         </Button>
     </li>

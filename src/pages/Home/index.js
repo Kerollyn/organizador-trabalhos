@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect} from 'react';
 import { MdExitToApp} from 'react-icons/md'
+import { useHistory } from "react-router-dom";
 
 import { Main, Container, Top, Section } from './styles'
 
@@ -10,8 +11,8 @@ import useModal from '../Components/Modal/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
-import { getAccessToken } from '../../shared/tokenUtils'
-import { Link } from 'react-router-dom';
+import { getAccessToken, setAccessToken } from '../../shared/tokenUtils'
+//import { Link } from 'react-router-dom';
 
 const { API_BASE_URL } = constants
 
@@ -34,11 +35,20 @@ const _fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassW
         } )
 }
 
+function logout(history){
+    //console.log("logout function!")
+    setAccessToken(null);
+    localStorage.clear();
+    history.replace("/");
+}
+
 export default function Home() {
     const { isShowing, toggle } = useModal()
     const [file, setFile] = useState([])
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
+
+    const history = useHistory();
 
     const fetchClassWorkList = _fetchClassWorkList.bind(null, classWorkOngoingList, classWorkDoneList )
 
@@ -54,12 +64,9 @@ export default function Home() {
                     <div className='titulo'>
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
-                    <div className='usuario'>
+                    <div className='usuario' onClick={e=>{logout(history)}}>
                         <label>TESTE</label>
-                        <Link to="/">
-                            <MdExitToApp size={16} />
-                        </Link>
-                        
+                        <MdExitToApp size={16} /> 
                     </div>
                 </header>
 

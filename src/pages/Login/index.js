@@ -23,7 +23,7 @@ export default function Login() {
             .then(res => {
                 const { token } = res.data || {}
                 setAccessToken( token )
-                history.push("/home");
+                history.replace("/home");
             })
             .catch(error => {
                 alert("Usuário ou senha errado!")
