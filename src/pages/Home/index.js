@@ -61,7 +61,6 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
 
 export default function Home() {
     const { isShowing, toggle } = useModal()
-    const [file, setFile] = useState([])
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
 
@@ -100,8 +99,6 @@ export default function Home() {
                             <Modal
                                 isShowing={isShowing}
                                 hide={toggle}
-                                file={file}
-                                setFile={setFile}
                                 insertOrRemoveClasswork={insertOrRemoveClasswork}
                             />
                         </div>

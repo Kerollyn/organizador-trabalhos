@@ -10,11 +10,12 @@ import { getAccessToken } from '../../../shared/tokenUtils'
 
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
 
-const cleanup = ( { setProfessor, setTitle, setSubject, setFile }  ) =>  {
+const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey }  ) =>  {
     setProfessor( [] )
     setTitle( [] )
     setSubject( [] )
     setFile( [] )
+    setFileKey( Math.random() )
 }
 
 const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswork}) => {
@@ -48,10 +49,13 @@ const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswo
     }
 }
 
-const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
+const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
     const [title, setTitle] = useState([])
     const [professor, setProfessor] = useState([])
     const [subject, setSubject] = useState([])
+    const [file, setFile] = useState([])
+    const [fileKey, setFileKey] = useState([])
+
 
     return isShowing
         ? ReactDOM.createPortal(
@@ -71,24 +75,24 @@ const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
                                         <MdFileUpload size={50}/>
                                     </li>
                                     <li>
-                                        <input type="file" onChange={e => setFile(e.target.files[0])}/>
+                                        <input type="file" onChange={e => setFile(e.target.files[0])} key={fileKey  || ''}/>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input onChange={e => setTitle(e.target.value)}/>
+                                            <Input onChange={e => setTitle(e.target.value)} value={title}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Disciplina</label>
-                                            <Input onChange={e => setSubject(e.target.value)}/>
+                                            <Input onChange={e => setSubject(e.target.value)} value={subject}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Nome do professor</label>
-                                            <Input onChange={e => setProfessor(e.target.value)}/>
+                                            <Input onChange={e => setProfessor(e.target.value)} value={professor}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
@@ -97,7 +101,7 @@ const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
                                             <Input type="date"/>
                                         </BlockInput>                                        
                                     </li>
-                                      <li>
+                                    <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
                                             <Select>
@@ -109,7 +113,7 @@ const Modal = ({ isShowing, hide, file, setFile, insertOrRemoveClasswork }) => {
                                     <li>
                                         <button type="submit" onClick={
                                             () => fileUpload({file, title, subject, professor, insertOrRemoveClasswork})
-                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle } ) )
+                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey } ) )
                                             }>
                                             Upload
                                         </button>
