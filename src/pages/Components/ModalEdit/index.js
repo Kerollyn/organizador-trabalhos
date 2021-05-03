@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 
-import { Container, ModalTeste, ModalConteudo, BlockInput, Input } from './styles'
+import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
 
 const Modal = ({ isShowing, hide }) =>
     isShowing
@@ -42,8 +42,19 @@ const Modal = ({ isShowing, hide }) =>
                                             <Input type="date"/>
                                         </BlockInput>
                                     </li>
+
                                     <li>
-                                         <button type="submit" >Upload</button>
+                                        <BlockInput>   
+                                            <label>Status do trabalho</label>
+                                            <Select>
+                                                <option>Em andamento</option>
+                                                <option>Concluido</option>
+                                            </Select>
+                                        </BlockInput>
+                                    </li>
+
+                                    <li>
+                                         <button type="submit" >Salvar</button>
                                     </li>
                                         
                                     

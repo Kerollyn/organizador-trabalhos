@@ -39,7 +39,7 @@ export const ModalTeste = styled.div`
 
         min-width: 400px;
         width: 400px;
-        height: 390px;
+        height: 380px;
         padding: 15px;
 
         border-radius: 5px;
@@ -47,7 +47,6 @@ export const ModalTeste = styled.div`
         div.modal-button {
             display: flex;
             justify-content: flex-end;
-            alignItems: "center";
             button {
                 background-color: #fff;
                 color: #6d6d6d;
@@ -66,13 +65,11 @@ export const ModalConteudo = styled.div`
         flex-wrap: wrap;
         width: 100%;
         flex-direction: column;
-        li {
-            padding-left: 40px;
-            padding-rigth: 10px;
+        li {           
             display: flex;
             flex-direction: row;
-            // justify-content: center;
             margin-top: 15px;
+            justify-content: center;
 
             button {
                 background-color: #9e1a2a;
@@ -90,6 +87,7 @@ export const ModalConteudo = styled.div`
         
     }
 `
+
 export const BlockInput = styled.div`
     & + & {
         margin-top: 6px;
@@ -101,6 +99,15 @@ export const BlockInput = styled.div`
 `
 
 export const Input = styled.input`
+    color: #000;
+    border: 1px solid #9e9e9e;
+    border-radius: 4px;
+    display: flex;
+    height: 23px;
+    width: 300px;   
+`
+
+export const Select = styled.select`
     color: #000;
     border: 1px solid #9e9e9e;
     border-radius: 4px;

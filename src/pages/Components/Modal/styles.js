@@ -40,7 +40,7 @@ export const ModalTeste = styled.div`
 
         min-width: 450px;
         width: 450px;
-        height: 420px;
+        height: 480px;
         padding: 15px;
 
         border-radius: 5px;
@@ -102,6 +102,14 @@ export const BlockInput = styled.div`
 `
 
 export const Input = styled.input`
+    color: #000;
+    border: 1px solid #9e9e9e;
+    border-radius: 4px;
+    display: flex;
+    height: 23px;
+    width: 300px;   
+`
+export const Select = styled.select`
     color: #000;
     border: 1px solid #9e9e9e;
     border-radius: 4px;

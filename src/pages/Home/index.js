@@ -16,18 +16,43 @@ import { getAccessToken, setAccessToken } from '../../shared/tokenUtils'
 
 const { API_BASE_URL } = constants
 
-const _fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList ) => {
+const _handleClassworkListChange = ( method, classworkList, targetClasswork, setClassworkList ) => {
+    if( method === 'insert' ){
+        classworkList.push( targetClasswork )
+    } else if ( method === 'remove' ) {
+        classworkList = classworkList.filter( element => element.id !== targetClasswork.id )
+    }
+    return setClassworkList( classworkList )
+}
+
+const _insertOrRemoveClasswork = ( { classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList }, { targetClasswork, list, method } ) => {
+    // Values for list are 'ongoing' or 'done'
+    // Values for method are 'insert' or 'remove'
+    if ( method !== 'insert' && method !== 'remove' ) {
+        throw new Error( 'A valid method must be informed.' )
+    }
+    switch (list) {
+        case 'ongoing':
+            return _handleClassworkListChange( method, classWorkOngoingList, targetClasswork, setClassWorkOngoingList )
+        case 'done':
+            return _handleClassworkListChange( method, classWorkDoneList, targetClasswork, setClassWorkDoneList )
+        default:
+        throw new Error( 'A valid list must be informed.' )
+    }
+}
+
+const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList ) => {
         return axios.get( `${ API_BASE_URL }/classworks`, { headers: { Authorization: getAccessToken() } } )
         .then( response => {
             const classWorks = response.data
-            const [ classWorkOngoingListFirstItem ] = classWorkOngoingList
-            const [ fetchedOngoingListFirstItem ] = classWorks.ongoing
-            const [ classWorkDoneListFisrtItem ] = classWorkDoneList
-            const [ fetchedDoneListFirstItem ] = classWorks.finished
-            if(classWorkOngoingListFirstItem?.id !== fetchedOngoingListFirstItem?.id ) {
+            const classWorkOngoingListLastItem = classWorkOngoingList[classWorkOngoingList.length - 1]
+            const fetchedOngoingListLastItem = classWorks.ongoing[classWorks.ongoing.length - 1]
+            const classWorkDoneListLastItem = classWorkDoneList[classWorkDoneList.length - 1]
+            const fetchedDoneListLastItem = classWorks.finished[classWorks.finished.length - 1]
+            if( !classWorkOngoingList.length && classWorkOngoingListLastItem?.id !== fetchedOngoingListLastItem?.id ) {
                 setClassWorkOngoingList( classWorks.ongoing )
             }
-            if(classWorkDoneListFisrtItem?.id !== fetchedDoneListFirstItem?.id) {
+            if( !classWorkDoneList.length && classWorkDoneListLastItem?.id !== fetchedDoneListLastItem?.id) {
                 setClassWorkDoneList( classWorks.finished )
             }
         } ).catch( ( error ) => {
@@ -44,19 +69,22 @@ function logout(history){
 
 export default function Home() {
     const { isShowing, toggle } = useModal()
-    const [file, setFile] = useState([])
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
 
+<<<<<<< HEAD
     const history = useHistory();
 
     const fetchClassWorkList = _fetchClassWorkList.bind(null, classWorkOngoingList, classWorkDoneList )
 
+=======
+>>>>>>> 62255e1642ebc8a50d990384ca41a675e0bf077b
     useEffect( () => {
-        fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
-    }, [classWorkOngoingList, classWorkDoneList, fetchClassWorkList] )
-    fetchClassWorkList( setClassWorkOngoingList, setClassWorkDoneList )
+        fetchClassWorkList( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList )
+    }, [classWorkOngoingList, classWorkDoneList] )
+    
 
+    const insertOrRemoveClasswork = _insertOrRemoveClasswork.bind( null, { classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList } )
     return (
         <Main>
             <Container>
@@ -83,16 +111,14 @@ export default function Home() {
                             <Modal
                                 isShowing={isShowing}
                                 hide={toggle}
-                                file={file}
-                                setFile={setFile}
-                                fetchClassWorks={() => fetchClassWorkList(setClassWorkOngoingList, setClassWorkDoneList)}
+                                insertOrRemoveClasswork={insertOrRemoveClasswork}
                             />
                         </div>
                     </form>
 
                     <ClassWorkList
                         ongoingList={classWorkOngoingList}
-                        fetchClassWorks={() => fetchClassWorkList(setClassWorkOngoingList, setClassWorkDoneList)}
+                        insertOrRemoveClasswork={insertOrRemoveClasswork}
                     />
                 </Section>
             </Container>
