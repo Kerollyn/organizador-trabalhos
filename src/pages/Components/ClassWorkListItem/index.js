@@ -23,23 +23,6 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork) => 
     }
 }
 
-<<<<<<< HEAD
-return ( 
-    <li className='row-center'>
-        <Button>
-            <div className="titulo">{title}</div>
-            <div className="disciplina">{subject}</div>
-            <div className="nomeProfessor">{professor}</div>
-            <div className="buttons">
-                <button>Visualizar</button>
-                <button>Detalhes</button>
-                <button>Editar</button>
-                <button onClick={()=> { if(window.confirm('Deseja deletar este arquivo?')) deleteFile(id, cloudStorageFileName, fetchClassWorks)}}>Deletar </button>
-            </div>
-        </Button>
-    </li>
-    )
-=======
 function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClasswork, cloudStorageFileName } ){
     const { isShowing, toggle } = useModal()
 
@@ -60,12 +43,15 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
                         hide={toggle}
                     />
 
-                    <button onClick={()=>deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork)}>Deletar </button>
+                    <button onClick={() => {
+                        if(window.confirm('Deseja deletar este arquivo?')) {
+                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork)
+                        }
+                    }}> Deletar </button>
                 </div>
             </Button>
         </li>
         )
->>>>>>> 62255e1642ebc8a50d990384ca41a675e0bf077b
 }
 
 export default ClassWorkListItem

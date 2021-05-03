@@ -72,13 +72,8 @@ export default function Home() {
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
 
-<<<<<<< HEAD
     const history = useHistory();
 
-    const fetchClassWorkList = _fetchClassWorkList.bind(null, classWorkOngoingList, classWorkDoneList )
-
-=======
->>>>>>> 62255e1642ebc8a50d990384ca41a675e0bf077b
     useEffect( () => {
         fetchClassWorkList( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList )
     }, [classWorkOngoingList, classWorkDoneList] )
