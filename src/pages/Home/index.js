@@ -88,7 +88,7 @@ export default function Home() {
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
                     <div className='usuario' onClick={e=>{logout(history)}}>
-                        <label>TESTE</label>
+                        <label>SAIR</label>
                         <MdExitToApp size={16} /> 
                     </div>
                 </header>
