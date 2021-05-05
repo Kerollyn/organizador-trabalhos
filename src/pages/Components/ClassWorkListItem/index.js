@@ -1,10 +1,11 @@
-import { Button } from './styles'
 import { getAccessToken } from '../../../shared/tokenUtils'
 import axios from 'axios'
 
-import Modal from '../ModalEdit';
+import ModalEdit from '../ModalEdit';
 import useModal from '../ModalEdit/useModal';
 
+import { Button } from './styles'
+//Icones dos botões
 import { MdDelete, MdModeEdit, MdVisibility, MdDescription } from "react-icons/md";
 
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork) => {
@@ -37,22 +38,17 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
                 <div className="nomeProfessor">{professor}</div>
                 <div className="buttons">
                     <button>
-                        {/*  Visualizar */}
                         <MdVisibility size={25}/>
                     </button>
+                    
                     <button>
-                        {/* Detalhes */}
                         <MdDescription size={25}/>
                     </button>
                     
                     <button type="button" onClick={toggle}>
-                        {/* Editar */}
                         <MdModeEdit size={25}/>
                     </button>
-                    <Modal
-                        isShowing={isShowing}
-                        hide={toggle}
-                    />
+                    <ModalEdit isShowing={isShowing} hide={toggle}/>
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {

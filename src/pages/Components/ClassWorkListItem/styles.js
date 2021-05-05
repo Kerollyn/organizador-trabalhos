@@ -12,10 +12,6 @@ export const Button = styled.button`
         cursor: pointer;
         align-items: center;
         margin-top: 1px;
-        /* &.selected {
-            color: #fff;
-        } */
     }
 
 `
-

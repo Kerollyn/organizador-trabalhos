@@ -1,17 +1,17 @@
 import axios from 'axios'
 import React, { useState, useEffect} from 'react';
-import { MdExitToApp} from 'react-icons/md'
+
 import { useHistory } from "react-router-dom";
 
+import { MdExitToApp} from 'react-icons/md'
 import { Main, Container, Top, Section } from './styles'
 
-import Modal from '../Components/Modal'
-import useModal from '../Components/Modal/useModal'
+import ModalUpload from '../Components/ModalUpload'
+import useModal from '../Components/ModalUpload/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
 import { getAccessToken, setAccessToken } from '../../shared/tokenUtils'
-//import { Link } from 'react-router-dom';
 
 const { API_BASE_URL } = constants
 
@@ -86,9 +86,12 @@ export default function Home() {
                     <div className='titulo'>
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
-                    <div className='usuario' onClick={e=>{logout(history)}}>
+                    <div className='usuario' >
                         <label>TESTE</label>
-                        <MdExitToApp size={16} /> 
+                        <button onClick={e=>{logout(history)}}>
+                            <MdExitToApp size={16} /> 
+                        </button>
+                        
                     </div>
                 </header>
 
@@ -102,9 +105,7 @@ export default function Home() {
                             <button type='button' onClick={toggle}>
                                 Upload
                             </button>
-                            <Modal
-                                isShowing={isShowing}
-                                hide={toggle}
+                            <ModalUpload isShowing={isShowing} hide={toggle}
                                 insertOrRemoveClasswork={insertOrRemoveClasswork}
                             />
                         </div>

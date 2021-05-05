@@ -79,7 +79,7 @@ export const Section = styled.section`
             }
         }
     }
-
+//Conteudo
     ul {
         display: flex;
         flex-direction: column;
@@ -112,10 +112,8 @@ export const Section = styled.section`
                     color: #fff;
                     border-radius: 4px;
                     height: 30px;
-                    /* width: 90px; */
                     width: 50px;
                     margin-left: 10px;
-                    /* margin-rigth: 10px; */
                 }
             }
         }        

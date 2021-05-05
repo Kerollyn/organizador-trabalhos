@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom'
 
-import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
+import { Container, ModalTeste, ModalConteudo, BlockInput } from './styles'
 
-const ModalEdit = ({ isShowing, hide }) =>
+const ModalDetail = ({ isShowing, hide }) =>
     isShowing
         ? ReactDOM.createPortal(
               <Container>
@@ -20,41 +20,34 @@ const ModalEdit = ({ isShowing, hide }) =>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input/>
+                                            <label></label>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>       
                                             <label>Disciplina</label>
-                                            <Input/>
+                                            <label></label>
                                         </BlockInput>
                                     </li>                                    
                                     <li>
                                         <BlockInput>   
                                             <label>Nome do professor</label>
-                                            <Input/>
+                                            <label></label>
                                         </BlockInput>
                                     </li>
                                     
                                     <li>
                                         <BlockInput>
                                             <label>Data de entrega</label>
-                                            <Input type="date"/>
+                                            <label></label>
                                         </BlockInput>
                                     </li>
 
                                     <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
-                                            <Select>
-                                                <option>Em andamento</option>
-                                                <option>Concluido</option>
-                                            </Select>
+                                            <label></label>
                                         </BlockInput>
-                                    </li>
-
-                                    <li>
-                                         <button type="submit" >Salvar</button>
                                     </li>
                                         
                                     
@@ -67,4 +60,4 @@ const ModalEdit = ({ isShowing, hide }) =>
           )
         : null
 
-export default ModalEdit
+export default ModalDetail

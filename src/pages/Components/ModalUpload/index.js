@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import { MdFileUpload } from 'react-icons/md'
 
+import { MdCloudUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
-// import { Alert } from 'reactstrap';
 
 import { getAccessToken } from '../../../shared/tokenUtils'
 
@@ -72,7 +71,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
                             <ModalConteudo>
                                 <ul>
                                     <li>
-                                        <MdFileUpload size={50}/>
+                                        <MdCloudUpload size={50}/>
                                     </li>
                                     <li>
                                         <input type="file" onChange={e => setFile(e.target.files[0])} key={fileKey  || ''}/>
