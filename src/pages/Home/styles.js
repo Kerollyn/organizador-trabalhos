@@ -69,7 +69,7 @@ export const Section = styled.section`
 
             button {
                 height: 29px;
-                width: 91px;
+                width: 91px;                 
                 cursor: pointer;
                 font-size: 11px;
                 color: #fff;
@@ -112,9 +112,10 @@ export const Section = styled.section`
                     color: #fff;
                     border-radius: 4px;
                     height: 30px;
-                    width: 90px;
+                    /* width: 90px; */
+                    width: 50px;
                     margin-left: 10px;
-                    margin-rigth: 10px;
+                    /* margin-rigth: 10px; */
                 }
             }
         }        
@@ -136,11 +137,6 @@ export const Section = styled.section`
 //         &.selected {
 //             color: #fff;
 //         }
-//     }
-
-//     &.selected {
-//         background-color: #b97415;
-//         color: #fff;
 //     }
 // `
 

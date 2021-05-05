@@ -32,6 +32,8 @@ const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswo
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
                 { buildWorkLists( classWorkLists, 'ongoingList', insertOrRemoveClasswork ) }
             </ul>
+
+            <br/><br/>
             <h1>Concluídos</h1>
             <ul>
                 <li className='header-center'>

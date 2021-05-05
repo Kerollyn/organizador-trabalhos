@@ -114,7 +114,6 @@ export const Section = styled.section`
                     height: 30px;
                     width: 90px;
                     margin-left: 10px;
-                    margin-rigth: 10px;
                 }
             }
         }        
@@ -133,14 +132,7 @@ export const Button = styled.button`
         cursor: pointer;
         align-items: center;
         margin-top: 1px;
-        &.selected {
-            color: #fff;
-        }
     }
 
-    &.selected {
-        background-color: #b97415;
-        color: #fff;
-    }
 `
 
