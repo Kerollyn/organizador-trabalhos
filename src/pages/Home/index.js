@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { Main, Container, Top, Section } from './styles'
 
 import Modal from '../Components/Modal'
-// import ModalV2 from '../Components/ModalV2'
 import useModal from '../Components/Modal/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 

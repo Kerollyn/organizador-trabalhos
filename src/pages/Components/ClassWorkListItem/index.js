@@ -5,6 +5,8 @@ import axios from 'axios'
 import Modal from '../ModalEdit';
 import useModal from '../ModalEdit/useModal';
 
+import { MdDelete, MdModeEdit, MdVisibility, MdDescription } from "react-icons/md";
+
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;
     console.log(`URL Deleção: ${url}`);
@@ -34,10 +36,19 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
                 <div className="disciplina">{subject}</div>
                 <div className="nomeProfessor">{professor}</div>
                 <div className="buttons">
-                    <button>Visualizar</button>
-                    <button>Detalhes</button>
+                    <button>
+                        {/*  Visualizar */}
+                        <MdVisibility size={25}/>
+                    </button>
+                    <button>
+                        {/* Detalhes */}
+                        <MdDescription size={25}/>
+                    </button>
                     
-                    <button type="button" onClick={toggle}>Editar</button>
+                    <button type="button" onClick={toggle}>
+                        {/* Editar */}
+                        <MdModeEdit size={25}/>
+                    </button>
                     <Modal
                         isShowing={isShowing}
                         hide={toggle}
@@ -47,7 +58,10 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
                         if(window.confirm('Deseja deletar este arquivo?')) {
                             deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork)
                         }
-                    }}> Deletar </button>
+                    }}>
+                         {/* Deletar  */}
+                         <MdDelete size={25}/>
+                    </button>
                 </div>
             </Button>
         </li>
