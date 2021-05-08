@@ -11,7 +11,7 @@ import useModal from '../Components/ModalUpload/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
-import { getAccessToken, setAccessToken } from '../../shared/tokenUtils'
+import { getAccessToken, setAccessToken, getUser } from '../../shared/tokenUtils'
 
 const { API_BASE_URL } = constants
 
@@ -87,7 +87,7 @@ export default function Home() {
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
                     <div className='usuario' >
-                        <label>TESTE</label>
+                        <label>{getUser().name}</label>
                         <button onClick={e=>{logout(history)}}>
                             <MdExitToApp size={16} /> 
                         </button>
