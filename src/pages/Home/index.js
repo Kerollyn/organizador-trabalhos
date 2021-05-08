@@ -87,7 +87,7 @@ export default function Home() {
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
                     <div className='usuario' >
-                        <label>{getUser().name}</label>
+                        <label>{getUser().name.toUpperCase()}</label>
                         <button onClick={e=>{logout(history)}}>
                             <MdExitToApp size={16} /> 
                         </button>
