@@ -47,8 +47,20 @@ const fileUpload = async({file, title, subject, professor, status, deadline, ins
         insertOrRemoveClasswork( { targetClasswork: newClasswork, list: status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
+        const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
         console.error( err.stack )
-        alert('Ocorreu um erro ao tentar enviar o arquivo.')
+        if ( err.response ) {
+            switch (err.response.status) {
+                case 409:
+                    alert(`Você já possui um trabalho com este nome.\nNome do trabalho: ${ err.response.data.title }`)
+                    break
+                default:
+                    defaultAlert()
+                    break
+            }    
+        } else {
+            defaultAlert()
+        }
     }
 }
 
