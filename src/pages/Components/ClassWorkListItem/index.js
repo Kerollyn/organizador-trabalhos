@@ -56,7 +56,7 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
                         }
                     }}>
                          {/* Deletar  */}
-                         <MdDelete size={25}/>
+                        <MdDelete size={25}/>
                     </button>
                 </div>
             </Button>
