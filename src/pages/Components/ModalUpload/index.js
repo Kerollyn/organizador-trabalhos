@@ -44,7 +44,7 @@ const fileUpload = async({file, title, subject, professor, status, deadline, ins
         }
         const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
         const newClasswork = ( await axios.post( url, formData, options ) ).data
-        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: 'ongoing', method: 'insert' } )
+        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
         console.error( err.stack )

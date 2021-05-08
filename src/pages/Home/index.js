@@ -30,6 +30,7 @@ const _insertOrRemoveClasswork = ( { classWorkOngoingList, classWorkDoneList, se
     if ( method !== 'insert' && method !== 'remove' ) {
         throw new Error( 'A valid method must be informed.' )
     }
+    
     switch (list) {
         case 'ongoing':
             return _handleClassworkListChange( method, classWorkOngoingList, targetClasswork, setClassWorkOngoingList )
@@ -47,12 +48,12 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
             const classWorkOngoingListLastItem = classWorkOngoingList[classWorkOngoingList.length - 1]
             const fetchedOngoingListLastItem = classWorks.ongoing[classWorks.ongoing.length - 1]
             const classWorkDoneListLastItem = classWorkDoneList[classWorkDoneList.length - 1]
-            const fetchedDoneListLastItem = classWorks.finished[classWorks.finished.length - 1]
+            const fetchedDoneListLastItem = classWorks.done[classWorks.done.length - 1]
             if( !classWorkOngoingList.length && classWorkOngoingListLastItem?.id !== fetchedOngoingListLastItem?.id ) {
                 setClassWorkOngoingList( classWorks.ongoing )
             }
             if( !classWorkDoneList.length && classWorkDoneListLastItem?.id !== fetchedDoneListLastItem?.id) {
-                setClassWorkDoneList( classWorks.finished )
+                setClassWorkDoneList( classWorks.done )
             }
         } ).catch( ( error ) => {
             console.error( error )
@@ -60,7 +61,6 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
 }
 
 function logout(history){
-    //console.log("logout function!")
     setAccessToken(null);
     localStorage.clear();
     history.replace("/");
@@ -113,6 +113,7 @@ export default function Home() {
 
                     <ClassWorkList
                         ongoingList={classWorkOngoingList}
+                        doneList={classWorkDoneList}
                         insertOrRemoveClasswork={insertOrRemoveClasswork}
                     />
                 </Section>

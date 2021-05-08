@@ -8,7 +8,7 @@ import { Button } from './styles'
 //Icones dos botões
 import { MdDelete, MdModeEdit, MdVisibility, MdDescription } from "react-icons/md";
 
-const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork) => {
+const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;
     console.log(`URL Deleção: ${url}`);
     const token = getAccessToken()
@@ -19,14 +19,14 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork) => 
     }
     try {
         await axios.delete( url, options )
-        insertOrRemoveClasswork( { targetClasswork: { id }, list: 'ongoing', method: 'remove' } )
+        insertOrRemoveClasswork( { targetClasswork: { id }, list: status, method: 'remove' } )
     } catch( err ) {
         console.error( err.stack )
         alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
     }
 }
 
-function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClasswork, cloudStorageFileName } ){
+function ClassWorkListItem ( { id, status, title, subject, professor, insertOrRemoveClasswork, cloudStorageFileName } ){
     const { isShowing, toggle } = useModal()
 
 
@@ -52,7 +52,7 @@ function ClassWorkListItem ( { id, title, subject, professor, insertOrRemoveClas
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {
-                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork)
+                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork, status)
                         }
                     }}>
                          {/* Deletar  */}
