@@ -2,7 +2,9 @@ import { getAccessToken } from '../../../shared/tokenUtils'
 import axios from 'axios'
 
 import ModalEdit from '../ModalEdit';
-import useModal from '../ModalEdit/useModal';
+import useModalEdit from '../ModalEdit/useModal';
+import ModalDetail from '../ModalDetail';
+import useModalDetail from '../ModalDetail/useModal';
 
 import { Button } from './styles'
 //Icones dos botões
@@ -27,8 +29,8 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
 }
 
 function ClassWorkListItem ( { id, status, title, subject, professor, insertOrRemoveClasswork, cloudStorageFileName } ){
-    const { isShowing, toggle } = useModal()
-
+    const { isShowingEdit, toggleEdit } = useModalEdit()
+    const { isShowingDetail, toggleDetail} = useModalDetail()
 
     return ( 
         <li className='row-center'>
@@ -41,14 +43,15 @@ function ClassWorkListItem ( { id, status, title, subject, professor, insertOrRe
                         <MdVisibility size={25}/>
                     </button>
                     
-                    <button>
+                    <button onClick={toggleDetail}>
                         <MdDescription size={25}/>
                     </button>
-                    
-                    <button type="button" onClick={toggle}>
+                    <ModalDetail isShowing={isShowingDetail} hide={toggleDetail}/>
+
+                    <button type="button" onClick={toggleEdit}>
                         <MdModeEdit size={25}/>
                     </button>
-                    <ModalEdit isShowing={isShowing} hide={toggle}/>
+                    <ModalEdit isShowing={isShowingEdit} hide={toggleEdit}/>
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {

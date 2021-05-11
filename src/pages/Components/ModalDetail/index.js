@@ -20,36 +20,39 @@ const ModalDetail = ({ isShowing, hide }) =>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <label></label>
+                                            <label>TESTE</label>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>       
                                             <label>Disciplina</label>
-                                            <label></label>
+                                            <label>TESTE</label>
                                         </BlockInput>
                                     </li>                                    
                                     <li>
                                         <BlockInput>   
                                             <label>Nome do professor</label>
-                                            <label></label>
+                                            <label>TESTE</label>
                                         </BlockInput>
                                     </li>
                                     
                                     <li>
                                         <BlockInput>
                                             <label>Data de entrega</label>
-                                            <label></label>
+                                            <label>TESTE</label>
                                         </BlockInput>
                                     </li>
 
                                     <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
-                                            <label></label>
+                                            <label>TESTE</label>
                                         </BlockInput>
                                     </li>
-                                        
+
+                                    <li>
+                                        <button>Fechar</button>
+                                    </li>                                        
                                     
                                 </ul>
                             </ModalConteudo>

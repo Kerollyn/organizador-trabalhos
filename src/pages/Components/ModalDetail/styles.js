@@ -37,9 +37,9 @@ export const ModalTeste = styled.div`
         position: relative;
         margin: 6.95rem auto;
 
-        min-width: 400px;
-        width: 400px;
-        height: 380px;
+        min-width: 300px;
+        width: 300px;
+        height: 325px;
         padding: 15px;
 
         border-radius: 5px;
@@ -68,10 +68,17 @@ export const ModalConteudo = styled.div`
         li {           
             display: flex;
             flex-direction: row;
-            margin-top: 15px;
-            justify-content: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+
+            label{
+                display: flex;
+                flex-wrap:wrap;
+            }
 
             button {
+                
+                margin:5px 0 0 95px;
                 background-color: #9e1a2a;
                 color: #fff;
                 padding: 6px 12px;
@@ -92,7 +99,6 @@ export const BlockInput = styled.div`
     & + & {
         margin-top: 6px;
     }
-
     label {
         font-size: 16px;
     }
