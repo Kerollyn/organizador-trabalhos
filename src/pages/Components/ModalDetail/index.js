@@ -48,7 +48,7 @@ const ModalDetail = ({ isShowing, hide }) =>
                                     </BlockInput>
                                 </li>
                                 <li>
-                                    <button>Fechar</button>
+                                    <button onClick={hide}>Fechar</button>
                                 </li>                                        
                                     
                             </ul>
