@@ -1,17 +1,17 @@
 import axios from 'axios'
 import React, { useState, useEffect} from 'react';
-import { MdExitToApp} from 'react-icons/md'
+
 import { useHistory } from "react-router-dom";
 
+import { MdExitToApp} from 'react-icons/md'
 import { Main, Container, Top, Section } from './styles'
 
-import Modal from '../Components/Modal'
-import useModal from '../Components/Modal/useModal'
+import ModalUpload from '../Components/ModalUpload'
+import useModal from '../Components/ModalUpload/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
-import { getAccessToken, setAccessToken } from '../../shared/tokenUtils'
-//import { Link } from 'react-router-dom';
+import { getAccessToken, setAccessToken, getUser } from '../../shared/tokenUtils'
 
 const { API_BASE_URL } = constants
 
@@ -30,6 +30,7 @@ const _insertOrRemoveClasswork = ( { classWorkOngoingList, classWorkDoneList, se
     if ( method !== 'insert' && method !== 'remove' ) {
         throw new Error( 'A valid method must be informed.' )
     }
+    
     switch (list) {
         case 'ongoing':
             return _handleClassworkListChange( method, classWorkOngoingList, targetClasswork, setClassWorkOngoingList )
@@ -47,12 +48,12 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
             const classWorkOngoingListLastItem = classWorkOngoingList[classWorkOngoingList.length - 1]
             const fetchedOngoingListLastItem = classWorks.ongoing[classWorks.ongoing.length - 1]
             const classWorkDoneListLastItem = classWorkDoneList[classWorkDoneList.length - 1]
-            const fetchedDoneListLastItem = classWorks.finished[classWorks.finished.length - 1]
+            const fetchedDoneListLastItem = classWorks.done[classWorks.done.length - 1]
             if( !classWorkOngoingList.length && classWorkOngoingListLastItem?.id !== fetchedOngoingListLastItem?.id ) {
                 setClassWorkOngoingList( classWorks.ongoing )
             }
             if( !classWorkDoneList.length && classWorkDoneListLastItem?.id !== fetchedDoneListLastItem?.id) {
-                setClassWorkDoneList( classWorks.finished )
+                setClassWorkDoneList( classWorks.done )
             }
         } ).catch( ( error ) => {
             console.error( error )
@@ -60,7 +61,6 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
 }
 
 function logout(history){
-    //console.log("logout function!")
     setAccessToken(null);
     localStorage.clear();
     history.replace("/");
@@ -86,9 +86,12 @@ export default function Home() {
                     <div className='titulo'>
                         <label>Gerenciamento de trabalhos academicos</label>
                     </div>
-                    <div className='usuario' onClick={e=>{logout(history)}}>
-                        <label>SAIR</label>
-                        <MdExitToApp size={16} /> 
+                    <div className='usuario' >
+                        <label>{getUser().name.toUpperCase()}</label>
+                        <button onClick={e=>{logout(history)}}>
+                            <MdExitToApp size={16} /> 
+                        </button>
+                        
                     </div>
                 </header>
 
@@ -102,9 +105,7 @@ export default function Home() {
                             <button type='button' onClick={toggle}>
                                 Upload
                             </button>
-                            <Modal
-                                isShowing={isShowing}
-                                hide={toggle}
+                            <ModalUpload isShowing={isShowing} hide={toggle}
                                 insertOrRemoveClasswork={insertOrRemoveClasswork}
                             />
                         </div>
@@ -112,6 +113,7 @@ export default function Home() {
 
                     <ClassWorkList
                         ongoingList={classWorkOngoingList}
+                        doneList={classWorkDoneList}
                         insertOrRemoveClasswork={insertOrRemoveClasswork}
                     />
                 </Section>

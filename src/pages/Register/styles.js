@@ -67,8 +67,6 @@ export const Button = styled.div `
         width: 100px;
         border-radius: 4px;
         margin-left: 5px;
-    }
-
-   
+    }  
 
 `

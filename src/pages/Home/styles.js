@@ -79,7 +79,7 @@ export const Section = styled.section`
             }
         }
     }
-
+//Conteudo
     ul {
         display: flex;
         flex-direction: column;
@@ -112,31 +112,10 @@ export const Section = styled.section`
                     color: #fff;
                     border-radius: 4px;
                     height: 30px;
-                    /* width: 90px; */
                     width: 50px;
                     margin-left: 10px;
-                    /* margin-rigth: 10px; */
                 }
             }
         }        
     }
 `
-
-// export const Button = styled.button`
-//     display: flex;
-//     align-items: center;
-//     border: none;
-//     height: 60px;
-//     width: 100%;
-//     background-color: #fff;
-
-//     li.row-center {
-//         cursor: pointer;
-//         align-items: center;
-//         margin-top: 1px;
-//         &.selected {
-//             color: #fff;
-//         }
-//     }
-// `
-

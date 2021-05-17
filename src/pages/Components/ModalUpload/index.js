@@ -1,24 +1,25 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import { MdFileUpload } from 'react-icons/md'
 
+import { MdCloudUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
-// import { Alert } from 'reactstrap';
 
 import { getAccessToken } from '../../../shared/tokenUtils'
 
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
 
-const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey }  ) =>  {
+const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, setStatus, setDeadline }  ) =>  {
     setProfessor( [] )
     setTitle( [] )
     setSubject( [] )
+    setStatus( '' )
+    setDeadline( [] )
     setFile( [] )
     setFileKey( Math.random() )
 }
 
-const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswork}) => {
+const fileUpload = async({file, title, subject, professor, status, deadline, insertOrRemoveClasswork}) => {
     const fieldsToValidate = [ file, title, subject, professor ]
     try {
         const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
@@ -32,7 +33,9 @@ const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswo
             formData.append('title', title)
             formData.append('subject', subject)
             formData.append('professorName', professor)
-        
+            formData.append('status', status)
+            formData.append('deadline', deadline)
+        console.log(status, deadline)
         const token = getAccessToken()
         const options = {
             headers: {
@@ -41,11 +44,23 @@ const fileUpload = async({file, title, subject, professor, insertOrRemoveClasswo
         }
         const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
         const newClasswork = ( await axios.post( url, formData, options ) ).data
-        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: 'ongoing', method: 'insert' } )
+        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
+        const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
         console.error( err.stack )
-        alert('Ocorreu um erro ao tentar enviar o arquivo.')
+        if ( err.response ) {
+            switch (err.response.status) {
+                case 409:
+                    alert(`Você já possui um trabalho com este nome.\nNome do trabalho: ${ err.response.data.title }`)
+                    break
+                default:
+                    defaultAlert()
+                    break
+            }    
+        } else {
+            defaultAlert()
+        }
     }
 }
 
@@ -55,6 +70,8 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
     const [subject, setSubject] = useState([])
     const [file, setFile] = useState([])
     const [fileKey, setFileKey] = useState([])
+    const [deadline, setDeadline] = useState([])
+    const [status, setStatus] = useState('')
 
 
     return isShowing
@@ -72,7 +89,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
                             <ModalConteudo>
                                 <ul>
                                     <li>
-                                        <MdFileUpload size={50}/>
+                                        <MdCloudUpload size={50}/>
                                     </li>
                                     <li>
                                         <input type="file" onChange={e => setFile(e.target.files[0])} key={fileKey  || ''}/>
@@ -98,22 +115,23 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
-                                            <Input type="date"/>
+                                            <Input onChange={e => setDeadline(e.target.value)} type="date" key={`deadline-${fileKey || ''}`}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
-                                            <Select>
-                                                <option>Em andamento</option>
-                                                <option>Concluido</option>
+                                            <Select value={status} onChange={e => setStatus(e.target.value)}>
+                                                <option value={''}>Selecione...</option>
+                                                <option value={'ongoing'}>Em andamento</option>
+                                                <option value={'done'}>Concluido</option>
                                             </Select>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <button type="submit" onClick={
-                                            () => fileUpload({file, title, subject, professor, insertOrRemoveClasswork})
-                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey } ) )
+                                            () => fileUpload({file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
+                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey, setStatus, setDeadline } ) )
                                             }>
                                             Upload
                                         </button>

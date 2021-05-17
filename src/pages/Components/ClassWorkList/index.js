@@ -9,6 +9,7 @@ const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswor
                 professor={classWork.professorName}
                 fileName={classWork.fileName}
                 id={classWork.id}
+                status={classWork.status}
                 key={ `ongoing-${ index }` }
                 cloudStorageFileName={classWork.cloudStorageFileName}
                 insertOrRemoveClasswork={insertOrRemoveClasswork}

@@ -36,11 +36,11 @@ export const ModalTeste = styled.div`
         /* z-index: 100; */
         background: #ffff;
         position: relative;
-        margin: 6.1rem auto;
+        margin: 2rem auto;
 
-        min-width: 450px;
-        width: 450px;
-        height: 480px;
+        min-width: 410px;
+        width: 400px;
+        height: 470px;
         padding: 15px;
 
         border-radius: 5px;
