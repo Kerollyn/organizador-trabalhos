@@ -45,7 +45,7 @@ const getDetails = async( id ,setWorkDetails) => {
         alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
     }
 }
-
+const mapeamento = {ongoing: 'Em andamento.', done: 'Concluido.', }
 
 const ModalDetail = ({ isShowing, hide, id }) =>
 
@@ -90,7 +90,8 @@ const ModalDetail = ({ isShowing, hide, id }) =>
                                 <li>
                                     <BlockInput>   
                                         <label>Status do trabalho</label>
-                                        <label>{workDetails.status}</label>
+                                        <label>{mapeamento[workDetails.status]}</label>
+                                        
                                     </BlockInput>
                                 </li>
                                 <li>
