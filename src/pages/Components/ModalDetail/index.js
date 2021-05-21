@@ -2,7 +2,8 @@ import ReactDOM from 'react-dom'
 import { getAccessToken } from '../../../shared/tokenUtils'
 import axios from 'axios'
 import { Container, ModalTeste, ModalConteudo, BlockInput } from './styles'
-//import { useState } from 'react';
+
+import moment from 'moment';
 
 let workDetails = {
     "id":0,
@@ -45,11 +46,14 @@ const getDetails = async( id ,setWorkDetails) => {
         alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
     }
 }
-const mapeamento = {ongoing: 'Em andamento.', done: 'Concluido.', }
+const mapeamento = {ongoing: 'Em andamento', done: 'Concluido', }
 
-const ModalDetail = ({ isShowing, hide, id }) =>
+function ModalDetail({ isShowing, hide, id }) {
+    const date = moment()
+        .utcOffset('+00:00')
+        .format('DD-MM-YYYY');
 
-    isShowing
+    return isShowing
         ? ReactDOM.createPortal(
             <Container onLoad={ getDetails(id)}>
                 <div className='modal-fundo' />
@@ -84,7 +88,7 @@ const ModalDetail = ({ isShowing, hide, id }) =>
                                 <li>
                                     <BlockInput>
                                         <label>Data de entrega</label>
-                                        <label>{workDetails.deadline}</label>
+                                        <label>{moment(workDetails.deadline).format('DD/MM/YYYY')}</label>
                                     </BlockInput>
                                 </li>
                                 <li>
@@ -106,5 +110,5 @@ const ModalDetail = ({ isShowing, hide, id }) =>
             document.body
           )
         : null
-
+        }
 export default ModalDetail
