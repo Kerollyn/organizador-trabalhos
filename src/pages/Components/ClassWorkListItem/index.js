@@ -34,14 +34,14 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
     const { isShowingEdit, toggleEdit } = useModalEdit()
     const { isShowingDetail, toggleDetail} = useModalDetail()
 
-    const { id, status, title, subject, professor, cloudStorageFileName } = classwork
+    const { id, status, title, subject, professorName, cloudStorageFileName } = classwork
 
     return ( 
         <li className='row-center'>
             <Button>
                 <div className="titulo">{title}</div>
                 <div className="disciplina">{subject}</div>
-                <div className="nomeProfessor">{professor}</div>
+                <div className="nomeProfessor">{professorName}</div>
                 <div className="buttons">
                     <button>
                         <MdVisibility size={25}/>
