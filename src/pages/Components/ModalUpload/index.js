@@ -4,18 +4,20 @@ import axios from 'axios'
 
 import { MdCloudUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
+import ClassworkApi from '../../../models/ClassworkApi'
 
 import { getAccessToken } from '../../../shared/tokenUtils'
 
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
+const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
 
-const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, setStatus, setDeadline }  ) =>  {
-    setProfessor( [] )
-    setTitle( [] )
-    setSubject( [] )
-    setStatus( '' )
-    setDeadline( [] )
-    setFile( [] )
+const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, setStatus, setDeadline, classwork = {} }  ) =>  {
+    setProfessor( classwork.professorName || [] )
+    setTitle( classwork.title || [] )
+    setSubject( classwork.subject || [] )
+    setStatus( classwork.status || '' )
+    setDeadline( classwork.deadline || [] )
+    setFile( null )
     setFileKey( Math.random() )
 }
 
@@ -47,7 +49,6 @@ const fileUpload = async({file, title, subject, professor, status, deadline, ins
         insertOrRemoveClasswork( { targetClasswork: newClasswork, list: status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
-        const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
         console.error( err.stack )
         if ( err.response ) {
             switch (err.response.status) {
@@ -64,16 +65,37 @@ const fileUpload = async({file, title, subject, professor, status, deadline, ins
     }
 }
 
-const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
-    const [title, setTitle] = useState([])
-    const [professor, setProfessor] = useState([])
-    const [subject, setSubject] = useState([])
-    const [file, setFile] = useState([])
+const fileUpdate = async( { classwork, file, insertOrRemoveClasswork } ) => {
+    const fieldsToValidate = [ classwork.title, classwork.subject, classwork.professorName ]
+    try {
+        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
+
+        if( !formIsFulfilled ) {
+            return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
+        }
+
+        const updatedClasswork = await ClassworkApi.updateClasswork( classwork, file )
+        insertOrRemoveClasswork( { targetClasswork: updatedClasswork, list: classwork.status, method: 'update' } )
+        return alert('Arquivo salvo com sucesso!')
+
+    } catch ( error ) {
+        console.error( error.stack )
+        return defaultAlert()
+    }
+}
+
+const getFormattedDate = ( date ) => `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+
+const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, createNew = true }) => {
+    const [title, setTitle] = useState(classwork.title || [])
+    const [professor, setProfessor] = useState(classwork.professorName || [])
+    const [subject, setSubject] = useState(classwork.subject || [])
+    const [file, setFile] = useState(null)
     const [fileKey, setFileKey] = useState([])
-    const [deadline, setDeadline] = useState([])
-    const [status, setStatus] = useState('')
+    const [deadline, setDeadline] = useState(classwork.deadline || [])
+    const [status, setStatus] = useState(classwork.status || '')
 
-
+console.log( 'CREATE NEW >>>>>> ', createNew )
     return isShowing
         ? ReactDOM.createPortal(
                 <Container>
@@ -115,13 +137,13 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
-                                            <Input onChange={e => setDeadline(e.target.value)} type="date" key={`deadline-${fileKey || ''}`}/>
+                                            <Input onChange={e => setDeadline(e.target.value)} value={getFormattedDate(new Date(deadline))} selected={getFormattedDate(new Date(deadline))} type="date" key={`deadline-${fileKey || ''}`}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
-                                            <Select value={status} onChange={e => setStatus(e.target.value)}>
+                                            <Select value={status} selected={status} onChange={e => setStatus(e.target.value)}>
                                                 <option value={''}>Selecione...</option>
                                                 <option value={'ongoing'}>Em andamento</option>
                                                 <option value={'done'}>Concluido</option>
@@ -130,8 +152,15 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork }) => {
                                     </li>
                                     <li>
                                         <button type="submit" onClick={
-                                            () => fileUpload({file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
-                                                .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey, setStatus, setDeadline } ) )
+                                            () => {
+                                                if ( createNew ) {
+                                                    fileUpload({file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
+                                                    .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey, setStatus, setDeadline, classwork } ) )
+                                                } else {
+                                                    fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork } )
+                                                    .then( () => cleanup( { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle, classwork } ) )
+                                                }
+                                            }
                                             }>
                                             Upload
                                         </button>

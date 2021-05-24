@@ -15,11 +15,27 @@ import { getAccessToken, setAccessToken, getUser } from '../../shared/tokenUtils
 
 const { API_BASE_URL } = constants
 
-const _handleClassworkListChange = ( method, classworkList, targetClasswork, setClassworkList ) => {
-    if( method === 'insert' ){
-        classworkList.push( targetClasswork )
-    } else if ( method === 'remove' ) {
-        classworkList = classworkList.filter( element => element.id !== targetClasswork.id )
+const _handleClassworkListChange = ( method, classworkList, targetClasswork, setClassworkList, altClassList, setAltList ) => {
+    switch (method) {
+        case 'insert':
+            classworkList.push( targetClasswork )
+            break
+        case 'remove':
+            classworkList = classworkList.filter( element => element.id !== targetClasswork.id )
+            break
+        case 'update':
+            const hasMovedFromList = altClassList.find( listItem => targetClasswork.id === listItem.id )
+            if ( hasMovedFromList ) {
+                classworkList.push( targetClasswork )
+                setAltList( altClassList.filter( listItem => targetClasswork.id !== listItem.id ) )
+            } else {
+                const itemIndex = classworkList.findIndex( listItem => listItem.id === targetClasswork.id )
+                classworkList.splice( itemIndex, 1, targetClasswork )
+            }
+            break
+        default:
+            console.log('No action taken for this method.')
+            break
     }
     return setClassworkList( classworkList )
 }
@@ -27,15 +43,16 @@ const _handleClassworkListChange = ( method, classworkList, targetClasswork, set
 const _insertOrRemoveClasswork = ( { classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList }, { targetClasswork, list, method } ) => {
     // Values for list are 'ongoing' or 'done'
     // Values for method are 'insert' or 'remove'
-    if ( method !== 'insert' && method !== 'remove' ) {
+    const validMethods = [ 'insert', 'remove', 'update' ]
+    if ( !validMethods.includes( method ) ) {
         throw new Error( 'A valid method must be informed.' )
     }
     
     switch (list) {
         case 'ongoing':
-            return _handleClassworkListChange( method, classWorkOngoingList, targetClasswork, setClassWorkOngoingList )
+            return _handleClassworkListChange( method, classWorkOngoingList, targetClasswork, setClassWorkOngoingList, classWorkDoneList, setClassWorkDoneList )
         case 'done':
-            return _handleClassworkListChange( method, classWorkDoneList, targetClasswork, setClassWorkDoneList )
+            return _handleClassworkListChange( method, classWorkDoneList, targetClasswork, setClassWorkDoneList, classWorkOngoingList, setClassWorkOngoingList )
         default:
         throw new Error( 'A valid list must be informed.' )
     }

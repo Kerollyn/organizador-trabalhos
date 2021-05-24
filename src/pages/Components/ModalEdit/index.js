@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom'
+import ClassworkApi from '../../../models/ClassworkApi'
 
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
 
-const ModalEdit = ({ isShowing, hide }) =>
+const ModalEdit = ({ isShowing, hide, classwork }) =>
     isShowing
         ? ReactDOM.createPortal(
             <Container>

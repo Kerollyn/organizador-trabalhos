@@ -2,6 +2,7 @@ import { getAccessToken } from '../../../shared/tokenUtils'
 import axios from 'axios'
 
 import ModalEdit from '../ModalEdit';
+import ModalUpload from '../ModalUpload';
 import useModalEdit from '../ModalEdit/useModal';
 import ModalDetail from '../ModalDetail';
 import useModalDetail from '../ModalDetail/useModal';
@@ -29,9 +30,11 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
     }
 }
 
-function ClassWorkListItem ( { id, status, title, subject, professor, insertOrRemoveClasswork, cloudStorageFileName } ){
+function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
     const { isShowingEdit, toggleEdit } = useModalEdit()
     const { isShowingDetail, toggleDetail} = useModalDetail()
+
+    const { id, status, title, subject, professor, cloudStorageFileName } = classwork
 
     return ( 
         <li className='row-center'>
@@ -52,7 +55,13 @@ function ClassWorkListItem ( { id, status, title, subject, professor, insertOrRe
                     <button type="button" onClick={toggleEdit}>
                         <MdModeEdit size={25}/>
                     </button>
-                    <ModalEdit isShowing={isShowingEdit} hide={toggleEdit}/>
+                    <ModalUpload
+                        isShowing={isShowingEdit}
+                        hide={toggleEdit}
+                        classwork={classwork}
+                        insertOrRemoveClasswork={insertOrRemoveClasswork}
+                        createNew={false}
+                    />
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {

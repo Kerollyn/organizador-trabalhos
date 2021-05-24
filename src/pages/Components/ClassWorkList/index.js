@@ -1,17 +1,12 @@
 import ClassWorkListItem from '../ClassWorkListItem'
+import Classwork from '../../../models/Classwork'
 
 const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswork ) => {
     const list = Object.keys( classWorkLists ).find( ( item ) => item === classWorkStatus )
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
-                title={classWork.title}
-                subject={classWork.subject}
-                professor={classWork.professorName}
-                fileName={classWork.fileName}
-                id={classWork.id}
-                status={classWork.status}
+                classwork={new Classwork(classWork)}
                 key={ `ongoing-${ index }` }
-                cloudStorageFileName={classWork.cloudStorageFileName}
                 insertOrRemoveClasswork={insertOrRemoveClasswork}
             />
     } )
@@ -19,6 +14,7 @@ const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswor
 
 const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswork } ) => {
     const classWorkLists = { ongoingList, doneList }
+    console.log( 'LIST >>>>>>>>>>>>>>>>>> ', classWorkLists )
 
     return (
         <>
