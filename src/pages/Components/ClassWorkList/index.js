@@ -6,7 +6,7 @@ const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswor
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
                 classwork={new Classwork(classWork)}
-                key={ `ongoing-${ index }` }
+                key={ `${ list }-${ index }` }
                 insertOrRemoveClasswork={insertOrRemoveClasswork}
             />
     } )
@@ -14,7 +14,6 @@ const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswor
 
 const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswork } ) => {
     const classWorkLists = { ongoingList, doneList }
-    console.log( 'LIST >>>>>>>>>>>>>>>>>> ', classWorkLists )
 
     return (
         <>

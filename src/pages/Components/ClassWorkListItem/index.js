@@ -1,7 +1,6 @@
 import { getAccessToken } from '../../../shared/tokenUtils'
 import axios from 'axios'
 
-import ModalEdit from '../ModalEdit';
 import ModalUpload from '../ModalUpload';
 import useModalEdit from '../ModalEdit/useModal';
 import ModalDetail from '../ModalDetail';
@@ -53,7 +52,6 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                     <ModalDetail
                         isShowing={isShowingDetail}
                         hide={toggleDetail}
-                        id={id}
                         classwork={classwork}
                     />
 
