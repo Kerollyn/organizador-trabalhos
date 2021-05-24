@@ -84,7 +84,10 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork } ) => {
     }
 }
 
-const getFormattedDate = ( date ) => `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+const getFormattedDate = ( date ) => {
+    const formattedDate = `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`
+    return formattedDate
+}
 
 const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, createNew = true }) => {
     const [title, setTitle] = useState(classwork.title || [])

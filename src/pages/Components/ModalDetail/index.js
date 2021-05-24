@@ -48,14 +48,14 @@ const getDetails = async( id ,setWorkDetails) => {
 }
 const mapeamento = {ongoing: 'Em andamento', done: 'Concluido', }
 
-function ModalDetail({ isShowing, hide, id }) {
+function ModalDetail({ isShowing, hide, id, classwork }) {
     const date = moment()
         .utcOffset('+00:00')
         .format('DD-MM-YYYY');
 
     return isShowing
         ? ReactDOM.createPortal(
-            <Container onLoad={ getDetails(id)}>
+            <Container>
                 <div className='modal-fundo' />
                 <ModalTeste>
                     <div className='modal'>
@@ -70,31 +70,31 @@ function ModalDetail({ isShowing, hide, id }) {
                                 <li>
                                     <BlockInput>
                                         <label>Título do trabalho</label>
-                                        <label>{workDetails.title}</label>
+                                        <label>{classwork.title}</label>
                                     </BlockInput>
                                 </li>
                                 <li>
                                     <BlockInput>       
                                         <label>Disciplina</label>
-                                        <label>{workDetails.subject}</label>
+                                        <label>{classwork.subject}</label>
                                     </BlockInput>
                                 </li>                                    
                                 <li>
                                     <BlockInput>   
                                         <label>Nome do professor</label>
-                                        <label>{workDetails.professorName}</label>
+                                        <label>{classwork.professorName}</label>
                                     </BlockInput>
                                 </li>                   
                                 <li>
                                     <BlockInput>
                                         <label>Data de entrega</label>
-                                        <label>{moment(workDetails.deadline).format('DD/MM/YYYY')}</label>
+                                        <label>{moment(classwork.deadline).format('DD/MM/YYYY')}</label>
                                     </BlockInput>
                                 </li>
                                 <li>
                                     <BlockInput>   
                                         <label>Status do trabalho</label>
-                                        <label>{mapeamento[workDetails.status]}</label>
+                                        <label>{mapeamento[classwork.status]}</label>
                                         
                                     </BlockInput>
                                 </li>

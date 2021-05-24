@@ -50,7 +50,12 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                     <button onClick={toggleDetail}>
                         <MdDescription size={25}/>
                     </button>
-                    <ModalDetail isShowing={isShowingDetail} hide={toggleDetail} id={id} />
+                    <ModalDetail
+                        isShowing={isShowingDetail}
+                        hide={toggleDetail}
+                        id={id}
+                        classwork={classwork}
+                    />
 
                     <button type="button" onClick={toggleEdit}>
                         <MdModeEdit size={25}/>
