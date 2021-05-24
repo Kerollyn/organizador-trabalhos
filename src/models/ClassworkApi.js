@@ -30,9 +30,6 @@ export default class ClassworkApi {
     }
 
     static async updateClasswork( classwork, file ) {
-        console.log( 'FILE >>>>>>>>>>', file )
-        console.log( 'FILE CLASSWK3 >>>>>>>>>>>>>>>>\n', classwork )
-
         const { id } = classwork
         const url = `${BASE_URL}/classworks/${id}`
         const classworkAsString = JSON.stringify(classwork)
@@ -41,12 +38,10 @@ export default class ClassworkApi {
         if ( file ) {
             formData.append('file', file, file.name)
         }
-        console.log( 'FORM 1 >>>>>>>>>>>\n', formData )
         try {
             const response = await axios.patch( url, formData, getDefaultOptions() )
             return response.data
         } catch ( err ) {
-            console.log( 'FORM ERRO >>>>>>>>>>>\n', formData )
         }
 
     }

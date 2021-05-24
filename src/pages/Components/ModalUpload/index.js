@@ -95,7 +95,6 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
     const [deadline, setDeadline] = useState(classwork.deadline || [])
     const [status, setStatus] = useState(classwork.status || '')
 
-console.log( 'CREATE NEW >>>>>> ', createNew )
     return isShowing
         ? ReactDOM.createPortal(
                 <Container>
