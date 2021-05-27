@@ -2,11 +2,16 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
     align-items: center;
-    background-color: #f2f2f2;
+    background-color: #ededed;
+
+    img{
+        height: 50px;
+        margin-bottom: 5px;
+    }
 `;
 
 export const Aside = styled.aside`

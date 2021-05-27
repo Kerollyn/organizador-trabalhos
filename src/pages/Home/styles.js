@@ -19,6 +19,10 @@ export const Container = styled.div`
             display: flex;
             align-items: center;
             margin-left: 5px;
+
+            img{
+                height: 20px;
+            }
         }
 
         div.usuario {

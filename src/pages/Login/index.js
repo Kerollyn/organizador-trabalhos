@@ -2,6 +2,8 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
+import Logo from '../../assets/Logo.png'
+
 
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
@@ -33,6 +35,7 @@ export default function Login() {
 
     return (
         <Container>
+            <img src={Logo} alt="logo"/>
             <Aside>
                 <form>
                     <strong>ACESSO AO SISTEMA</strong>

@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 
 import { MdExitToApp} from 'react-icons/md'
 import { Main, Container, Top, Section } from './styles'
+import Logo from '../../assets/LogoV2.png'
+
 
 import ModalUpload from '../Components/ModalUpload'
 import useModal from '../Components/ModalUpload/useModal'
@@ -101,7 +103,7 @@ export default function Home() {
             <Container>
                 <header>
                     <div className='titulo'>
-                        <label>Gerenciamento de trabalhos academicos</label>
+                        <img src={Logo} alt="logo"/>
                     </div>
                     <div className='usuario' >
                         <label>{getUser().name.toUpperCase()}</label>

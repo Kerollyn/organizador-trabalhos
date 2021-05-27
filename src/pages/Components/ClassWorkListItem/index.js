@@ -8,7 +8,7 @@ import useModalDetail from '../ModalDetail/useModal';
 
 import { Button } from './styles'
 //Icones dos botões
-import { MdDelete, MdModeEdit, MdVisibility, MdDescription } from "react-icons/md";
+import { MdDelete, MdModeEdit, MdFileDownload, MdDescription } from "react-icons/md";
 //import { useState } from 'react';
 
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
@@ -43,7 +43,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 <div className="nomeProfessor">{professorName}</div>
                 <div className="buttons">
                     <button>
-                        <MdVisibility size={25}/>
+                        <MdFileDownload size={25}/>
                     </button>
                     
                     <button onClick={toggleDetail}>

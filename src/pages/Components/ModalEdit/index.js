@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import ClassworkApi from '../../../models/ClassworkApi'
+// import ClassworkApi from '../../../models/ClassworkApi'
 
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
 
