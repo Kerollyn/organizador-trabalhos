@@ -9,7 +9,7 @@ export const Container = styled.div`
     background-color: #ededed;
 
     img{
-        height: 50px;
+        height: 150px;
         margin-bottom: 5px;
     }
 `;
