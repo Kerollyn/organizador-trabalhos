@@ -7,6 +7,7 @@ import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from 
 import ClassworkApi from '../../../models/ClassworkApi'
 
 import { getAccessToken } from '../../../shared/tokenUtils'
+import { getFormattedDate } from '../../../shared/dateUtils'
 
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
 const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
@@ -82,11 +83,6 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork } ) => {
         console.error( error.stack )
         return defaultAlert()
     }
-}
-
-const getFormattedDate = ( date ) => {
-    const formattedDate = `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`
-    return formattedDate
 }
 
 const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, createNew = true }) => {

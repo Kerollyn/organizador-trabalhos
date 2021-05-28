@@ -33,6 +33,7 @@ const _handleClassworkListChange = ( method, classworkList, targetClasswork, set
             } else {
                 const itemIndex = classworkList.findIndex( listItem => listItem.id === targetClasswork.id )
                 classworkList.splice( itemIndex, 1, targetClasswork )
+                classworkList = Array.from( classworkList.filter( listItem => targetClasswork.id !== listItem.id ).push( targetClasswork ) )
             }
             break
         default:
