@@ -1,8 +1,6 @@
 import ReactDOM from 'react-dom'
 import { Container, ModalTeste, ModalConteudo, BlockInput } from './styles'
-import { getFormattedDate } from '../../../shared/dateUtils'
-
-import moment from 'moment';
+import { getViewFormattedDate } from '../../../shared/dateUtils'
 
 function ModalDetail({ isShowing, hide, classwork }) {
     return isShowing
@@ -40,7 +38,7 @@ function ModalDetail({ isShowing, hide, classwork }) {
                                 <li>
                                     <BlockInput>
                                         <label>Data de entrega</label>
-                                        <label>{moment(getFormattedDate( classwork.deadline )).format('DD/MM/YYYY')}</label>
+                                        <label>{getViewFormattedDate( classwork.deadline )}</label>
                                     </BlockInput>
                                 </li>
                                 <li>
