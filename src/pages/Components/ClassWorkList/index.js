@@ -23,7 +23,8 @@ const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswo
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    {/* <div className="nomeProfessor">Arquivo</div> */}
+                    <div className="nomeProfessor">Data de entrega</div>
+                    <div/>
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
                 { buildWorkLists( classWorkLists, 'ongoingList', insertOrRemoveClasswork ) }
@@ -36,7 +37,8 @@ const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswo
                     <div className="titulo">Titulo do trabalho</div>
                     <div className="disciplina">Disciplina</div>
                     <div className="nomeProfessor">Nome do professor</div>
-                    {/* <div className="nomeProfessor">Arquivo</div> */}
+                    <div className="nomeProfessor">Data de entrega</div>
+                    <div/>
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
                 { buildWorkLists( classWorkLists, 'doneList', insertOrRemoveClasswork ) }

@@ -1,5 +1,7 @@
 import { getAccessToken } from '../../../shared/tokenUtils'
+import { getFormattedDate } from '../../../shared/dateUtils'
 import axios from 'axios'
+import moment from 'moment';
 
 import ModalUpload from '../ModalUpload';
 import useModalEdit from '../ModalEdit/useModal';
@@ -41,6 +43,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 <div className="titulo">{title}</div>
                 <div className="disciplina">{subject}</div>
                 <div className="nomeProfessor">{professorName}</div>
+                <div className="nomeProfessor">{moment(getFormattedDate( classwork.deadline )).format('DD/MM/YYYY')}</div>
                 <div className="buttons">
                     <button>
                         <MdFileDownload size={25}/>
