@@ -10,7 +10,7 @@ import useModalDetail from '../ModalDetail/useModal';
 import { Button, DateDiv } from './styles'
 //Icones dos botões
 import { MdDelete, MdModeEdit, MdRemoveRedEye, MdDescription } from "react-icons/md";
-//import { useState } from 'react';
+import { useState } from 'react';
 
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;

@@ -50,7 +50,10 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
     }
 }
 
-const fileUpdate = async( { classwork, file, insertOrRemoveClasswork } ) => {
+const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged } ) => {
+    if ( !hasChanged && !file ) {
+        return alert( 'Nenhuma mudança foi detectada.' )
+    }
     const fieldsToValidate = [ classwork.title, classwork.subject, classwork.professorName ]
     try {
         const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
@@ -69,16 +72,33 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork } ) => {
     }
 }
 
+const getCorrectValue = (createNew, stateValue, classworkValue, hasChanged) => {
+    const stateAndClassworkAreEqual = stateValue === classworkValue
+    console.log( 'stateAndClassworkAreEqual >> ', stateAndClassworkAreEqual )
+    console.log( 'HAS CHANGED >> ', hasChanged )
+    console.log( 'STATE VALUE >> ', stateValue )
+    if( !createNew ) {
+        return stateAndClassworkAreEqual || hasChanged ? stateValue : classworkValue
+    }
+    return stateAndClassworkAreEqual ? stateValue : classworkValue
+}
+
+const _defaultOnChangeHandler = ( { hasChanged, setHasChanged }, executeSetter, valueToSet ) => {
+    setHasChanged( hasChanged )
+    executeSetter( valueToSet )
+}
+
 const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, createNew = true }) => {
-    const [title, setTitle] = useState(classwork.title || [])
-    const [professor, setProfessor] = useState(classwork.professorName || [])
-    const [subject, setSubject] = useState(classwork.subject || [])
+    const [title, setTitle] = useState( createNew ? [] : classwork.title)
+    const [professor, setProfessor] = useState(createNew ? [] : classwork.professorName)
+    const [subject, setSubject] = useState(createNew ? [] : classwork.subject)
     const [file, setFile] = useState(null)
     const [fileKey, setFileKey] = useState([])
-    const [deadline, setDeadline] = useState(classwork.deadline || [])
-    const [status, setStatus] = useState(classwork.status || '')
-    console.log( classwork )
+    const [deadline, setDeadline] = useState(createNew ? [] : classwork.deadline)
+    const [status, setStatus] = useState(createNew ? '' : classwork.status)
+    const [hasChanged, setHasChanged] = useState(false)
 
+    const defaultOnChangeHandler = _defaultOnChangeHandler.bind( null, { hasChanged: true, setHasChanged } )
     const cleanModal = cleanup.bind( null, { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle } )
     return isShowing
         ? ReactDOM.createPortal(
@@ -103,33 +123,33 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                         <MdCloudUpload size={50}/>
                                     </li>
                                     <li>
-                                        <input type="file" onChange={e => setFile(e.target.files[0])} key={fileKey  || ''}/>
+                                        <input type="file" onChange={e => defaultOnChangeHandler( setFile, e.target.files[0])} key={fileKey  || ''}/>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input onChange={e => setTitle(e.target.value)} value={title}/>
+                                            <Input onChange={e => setTitle( e.target.value )} value={ getCorrectValue( createNew, title, classwork.title, hasChanged ) }/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Disciplina</label>
-                                            <Input onChange={e => setSubject(e.target.value)} value={subject}/>
+                                            <Input onChange={e => defaultOnChangeHandler( setSubject, e.target.value )} value={getCorrectValue( createNew, subject, classwork.subject, hasChanged )}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Nome do professor</label>
-                                            <Input onChange={e => setProfessor(e.target.value)} value={professor}/>
+                                            <Input onChange={e => defaultOnChangeHandler( setProfessor, e.target.value )} value={getCorrectValue( createNew, professor, classwork.professorName, hasChanged )}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
                                             <Input
-                                                onChange={e => setDeadline(e.target.value)}
-                                                value={getFormattedDate(deadline)}
-                                                selected={getFormattedDate(deadline)}
+                                                onChange={e => defaultOnChangeHandler( setDeadline, e.target.value )}
+                                                value={getFormattedDate(getCorrectValue(createNew, deadline, classwork.deadline, hasChanged))}
+                                                selected={getFormattedDate(getCorrectValue(createNew, deadline, classwork.deadline, hasChanged))}
                                                 type="date"
                                                 key={`deadline-${fileKey || ''}`}
                                             />
@@ -138,7 +158,11 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                     <li>
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
-                                            <Select value={status} selected={status} onChange={e => setStatus(e.target.value)}>
+                                            <Select
+                                                value={getCorrectValue( createNew, status, classwork.status, hasChanged)}
+                                                selected={getCorrectValue( createNew, status, classwork.status, hasChanged)}
+                                                onChange={e => defaultOnChangeHandler( setStatus, e.target.value )}
+                                            >
                                                 <option value={''}>Selecione...</option>
                                                 <option value={'ongoing'}>Em andamento</option>
                                                 <option value={'done'}>Concluido</option>
@@ -155,7 +179,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                                         hide()
                                                     } )
                                                 } else {
-                                                    fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork } )
+                                                    fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork, hasChanged } )
                                                     .then( () => {
                                                         cleanModal( classwork )
                                                         hide()
