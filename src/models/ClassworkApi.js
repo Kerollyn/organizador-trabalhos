@@ -17,12 +17,12 @@ export default class ClassworkApi {
         const url = `${BASE_URL}/classworks`
 
         const formData = new FormData()
-            .append('file', file, file.name)
-            .append('title', classwork.title)
-            .append('subject', classwork.subject)
-            .append('professorName', classwork.professor)
-            .append('status', classwork.status)
-            .append('deadline', classwork.deadline)
+        formData.append('file', file, file.name)
+        formData.append('title', classwork.title)
+        formData.append('subject', classwork.subject)
+        formData.append('professorName', classwork.professorName)
+        formData.append('status', classwork.status)
+        formData.append('deadline', classwork.deadline)
         
         const response = await axios.post( url, formData, getDefaultOptions() )
 

@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
 
 import { MdCloudUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
 import ClassworkApi from '../../../models/ClassworkApi'
 
-import { getAccessToken } from '../../../shared/tokenUtils'
 import { getFormattedDate } from '../../../shared/dateUtils'
 
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
@@ -22,31 +20,18 @@ const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, set
     setFileKey( Math.random() )
 }
 
-const fileUpload = async({file, title, subject, professor, status, deadline, insertOrRemoveClasswork}) => {
-    const fieldsToValidate = [ file, title, subject, professor ]
+const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
+    const { title, subject, professorName } = classwork
+    const fieldsToValidate = [ file, title, subject, professorName ]
     try {
-        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
+        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ) , true )
 
         if( !formIsFulfilled ) {
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
 
-        const formData = new FormData()
-            formData.append('file', file, file.name)
-            formData.append('title', title)
-            formData.append('subject', subject)
-            formData.append('professorName', professor)
-            formData.append('status', status)
-            formData.append('deadline', deadline)
-        const token = getAccessToken()
-        const options = {
-            headers: {
-                Authorization: token
-            }
-        }
-        const url = 'https://heroku-org-trabalhos-api.herokuapp.com/classworks'
-        const newClasswork = ( await axios.post( url, formData, options ) ).data
-        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: status, method: 'insert' } )
+        const newClasswork = await ClassworkApi.uploadClasswork( classwork, file )
+        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: classwork.status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
         console.error( err.stack )
@@ -142,7 +127,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                             <label>Data para entrega</label>
                                             <Input
                                                 onChange={e => setDeadline(e.target.value)}
-                                                value={createNew ? '' : getFormattedDate(deadline)}
+                                                value={getFormattedDate(deadline)}
                                                 selected={getFormattedDate(deadline)}
                                                 type="date"
                                                 key={`deadline-${fileKey || ''}`}
@@ -163,7 +148,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                         <button type="submit" onClick={
                                             () => {
                                                 if ( createNew ) {
-                                                    fileUpload({ file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
+                                                    fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork })
                                                     .then( () => cleanModal( classwork ) )
                                                 } else {
                                                     fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork } )

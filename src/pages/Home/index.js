@@ -69,12 +69,15 @@ const fetchClassWorkList = ( classWorkOngoingList, classWorkDoneList, setClassWo
             const fetchedOngoingListLastItem = classWorks.ongoing[classWorks.ongoing.length - 1]
             const classWorkDoneListLastItem = classWorkDoneList[classWorkDoneList.length - 1]
             const fetchedDoneListLastItem = classWorks.done[classWorks.done.length - 1]
+
             if( !classWorkOngoingList.length && classWorkOngoingListLastItem?.id !== fetchedOngoingListLastItem?.id ) {
                 setClassWorkOngoingList( classWorks.ongoing )
             }
+
             if( !classWorkDoneList.length && classWorkDoneListLastItem?.id !== fetchedDoneListLastItem?.id) {
                 setClassWorkDoneList( classWorks.done )
             }
+
         } ).catch( ( error ) => {
             console.error( error )
         } )
