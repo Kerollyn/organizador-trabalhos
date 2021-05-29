@@ -9,6 +9,8 @@ export const getViewFormattedDate = ( date ) => moment(getFormattedDate( date ))
 
 export const getDaysUntilDeadline = ( deadline ) => {
     const now = new Date( getFormattedDate() )
+    now.setUTCHours( 3, 0, 0, 0 )
     const safeDeadLine = new Date( getFormattedDate( deadline ) )
-    return Math.round( ( safeDeadLine - now ) / ( 1000 * 60 * 60 * 24 ) + 1 )
+    safeDeadLine.setUTCHours( 3, 0, 0, 0 )
+    return Math.round( ( safeDeadLine - now ) / ( 1000 * 60 * 60 * 24 ) )
 }
