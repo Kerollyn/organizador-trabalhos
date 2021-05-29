@@ -42,7 +42,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 <div className="titulo">{title}</div>
                 <div className="disciplina">{subject}</div>
                 <div className="nomeProfessor">{professorName}</div>
-                <DateDiv deadline={ classwork.deadline }>{getViewFormattedDate( classwork.deadline )}</DateDiv>
+                <DateDiv deadline={ classwork.deadline } status={ classwork.status }>{getViewFormattedDate( classwork.deadline )}</DateDiv>
                 <div className="buttons">
                     <a href={ `${ classwork.url }` } target="blank" download>
                         <button>

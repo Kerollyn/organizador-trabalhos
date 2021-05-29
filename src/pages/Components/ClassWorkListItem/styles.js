@@ -27,5 +27,9 @@ export const Button = styled.button`
 `
 
 export const DateDiv = styled.div`
-    color: ${ props => getColor( getDaysUntilDeadline( props.deadline ) ) }
+    color: ${ props => {
+        return props.status === 'ongoing'
+        ? getColor( getDaysUntilDeadline( props.deadline ) )
+        : 'black'
+    } }
 `
