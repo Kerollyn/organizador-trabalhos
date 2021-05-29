@@ -9,7 +9,7 @@ import useModalDetail from '../ModalDetail/useModal';
 
 import { Button, DateDiv } from './styles'
 //Icones dos botões
-import { MdDelete, MdModeEdit, MdFileDownload, MdDescription } from "react-icons/md";
+import { MdDelete, MdModeEdit, MdRemoveRedEye, MdDescription } from "react-icons/md";
 //import { useState } from 'react';
 
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
@@ -44,12 +44,14 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 <div className="nomeProfessor">{professorName}</div>
                 <DateDiv deadline={ classwork.deadline }>{getViewFormattedDate( classwork.deadline )}</DateDiv>
                 <div className="buttons">
-                    <button>
-                        <MdFileDownload size={25}/>
-                    </button>
-                    
+                    <a href={ `${ classwork.url }` } target="blank" download>
+                        <button>
+                            <MdDescription size={25}/>
+                        </button>
+                    </a>
+
                     <button onClick={toggleDetail}>
-                        <MdDescription size={25}/>
+                        <MdRemoveRedEye size={25}/>
                     </button>
                     <ModalDetail
                         isShowing={isShowingDetail}
