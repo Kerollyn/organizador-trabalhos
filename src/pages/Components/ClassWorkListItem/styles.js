@@ -7,7 +7,6 @@ const getColor = ( daysToDeadline ) => {
         { color: 'orange', test: daysToDeadline === 1 },
         { color: 'red', test: daysToDeadline < 1 }
     ]
-    console.log( daysToDeadline )
     return colors.find( element => element.test ).color
 }
 

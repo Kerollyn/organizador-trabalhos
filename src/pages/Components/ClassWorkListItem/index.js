@@ -14,7 +14,6 @@ import { MdDelete, MdModeEdit, MdRemoveRedEye, MdDescription } from "react-icons
 
 const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;
-    console.log(`URL Deleção: ${url}`);
     const token = getAccessToken()
     const options = {
         headers: {

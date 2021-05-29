@@ -12,7 +12,7 @@ import { getFormattedDate } from '../../../shared/dateUtils'
 const validateField = field => Boolean( ( Array.isArray( field ) && field.length ) || ( !Array.isArray( field ) && field ))
 const defaultAlert = () => alert('Ocorreu um erro ao tentar enviar o arquivo.')
 
-const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, setStatus, setDeadline, classwork = {} }  ) =>  {
+const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, setStatus, setDeadline }, classwork = {} ) =>  {
     setProfessor( classwork.professorName || [] )
     setTitle( classwork.title || [] )
     setSubject( classwork.subject || [] )
@@ -38,7 +38,6 @@ const fileUpload = async({file, title, subject, professor, status, deadline, ins
             formData.append('professorName', professor)
             formData.append('status', status)
             formData.append('deadline', deadline)
-        console.log(status, deadline)
         const token = getAccessToken()
         const options = {
             headers: {
@@ -94,6 +93,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
     const [deadline, setDeadline] = useState(classwork.deadline || [])
     const [status, setStatus] = useState(classwork.status || '')
 
+    const cleanModal = cleanup.bind( null, { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle } )
     return isShowing
         ? ReactDOM.createPortal(
                 <Container>
@@ -101,7 +101,12 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                     <ModalTeste>
                         <div className='modal'>
                             <div className='modal-button'>
-                                <button type='button' onClick={hide}>
+                                <button type='button' onClick={() => 
+                                    { 
+                                        cleanModal( classwork )
+                                        hide()
+                                    }}
+                                >
                                     <span aria-hidden='true'>&times;</span>
                                 </button>
                             </div>
@@ -135,7 +140,13 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
-                                            <Input onChange={e => setDeadline(e.target.value)} value={createNew ? '' : getFormattedDate(deadline)} selected={getFormattedDate(deadline)} type="date" key={`deadline-${fileKey || ''}`}/>
+                                            <Input
+                                                onChange={e => setDeadline(e.target.value)}
+                                                value={createNew ? '' : getFormattedDate(deadline)}
+                                                selected={getFormattedDate(deadline)}
+                                                type="date"
+                                                key={`deadline-${fileKey || ''}`}
+                                            />
                                         </BlockInput>                                        
                                     </li>
                                     <li>
@@ -152,11 +163,11 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                         <button type="submit" onClick={
                                             () => {
                                                 if ( createNew ) {
-                                                    fileUpload({file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
-                                                    .then( () => cleanup( { setFile, setProfessor, setSubject, setTitle, setFileKey, setStatus, setDeadline, classwork } ) )
+                                                    fileUpload({ file, title, subject, professor, status, deadline, insertOrRemoveClasswork})
+                                                    .then( () => cleanModal( classwork ) )
                                                 } else {
                                                     fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork } )
-                                                    .then( () => cleanup( { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle, classwork } ) )
+                                                    .then( () => cleanModal( classwork ) )
                                                 }
                                             }
                                             }>
