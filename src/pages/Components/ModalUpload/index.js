@@ -135,7 +135,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
-                                            <Input onChange={e => setDeadline(e.target.value)} value={getFormattedDate(new Date(deadline))} selected={getFormattedDate(new Date(deadline))} type="date" key={`deadline-${fileKey || ''}`}/>
+                                            <Input onChange={e => {setDeadline(e.target.value); console.log('DEADLINE UPLOAD >>>>>>>>>>\n', getFormattedDate(deadline))}} value={getFormattedDate(new Date(deadline))} selected={getFormattedDate(new Date(deadline))} type="date" key={`deadline-${fileKey || ''}`}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
