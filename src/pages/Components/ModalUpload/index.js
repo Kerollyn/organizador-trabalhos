@@ -77,6 +77,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
     const [fileKey, setFileKey] = useState([])
     const [deadline, setDeadline] = useState(classwork.deadline || [])
     const [status, setStatus] = useState(classwork.status || '')
+    console.log( classwork )
 
     const cleanModal = cleanup.bind( null, { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle } )
     return isShowing
@@ -149,10 +150,16 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                             () => {
                                                 if ( createNew ) {
                                                     fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork })
-                                                    .then( () => cleanModal( classwork ) )
+                                                    .then( () => {
+                                                        cleanModal( classwork )
+                                                        hide()
+                                                    } )
                                                 } else {
                                                     fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork } )
-                                                    .then( () => cleanModal( classwork ) )
+                                                    .then( () => {
+                                                        cleanModal( classwork )
+                                                        hide()
+                                                    } )
                                                 }
                                             }
                                             }>
