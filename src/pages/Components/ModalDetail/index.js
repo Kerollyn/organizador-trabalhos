@@ -2,6 +2,11 @@ import ReactDOM from 'react-dom'
 import { Container, ModalTeste, ModalConteudo, BlockInput } from './styles'
 import { getViewFormattedDate } from '../../../shared/dateUtils'
 
+const STATUS_MAP = {
+    ongoing: 'Em andamento',
+    done: 'Concluído'
+}
+
 function ModalDetail({ isShowing, hide, classwork }) {
     return isShowing
         ? ReactDOM.createPortal(
@@ -44,7 +49,7 @@ function ModalDetail({ isShowing, hide, classwork }) {
                                 <li>
                                     <BlockInput>   
                                         <label>Status do trabalho</label>
-                                        <label>{classwork.status}</label>
+                                        <label>{STATUS_MAP[ classwork.status ]}</label>
                                         
                                     </BlockInput>
                                 </li>
