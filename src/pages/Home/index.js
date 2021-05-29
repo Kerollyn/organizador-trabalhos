@@ -13,7 +13,7 @@ import useModal from '../Components/ModalUpload/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
-import { getAccessToken, setAccessToken, getUser } from '../../shared/tokenUtils'
+import { getAccessToken, setAccessToken, getUser, validateToken } from '../../shared/tokenUtils'
 
 const { API_BASE_URL } = constants
 
@@ -87,6 +87,7 @@ function logout(history){
 }
 
 export default function Home() {
+
     const { isShowing, toggle } = useModal()
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
@@ -97,9 +98,12 @@ export default function Home() {
         fetchClassWorkList( classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList )
     }, [classWorkOngoingList, classWorkDoneList] )
     
+    if ( !validateToken() ) {
+        logout( history )
+    }
 
     const insertOrRemoveClasswork = _insertOrRemoveClasswork.bind( null, { classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList } )
-    return (
+    return validateToken() ? (
         <Main>
             <Container>
                 <header>
@@ -108,7 +112,7 @@ export default function Home() {
                     </div>
                     <div className='usuario' >
                         <label>{getUser().name.toUpperCase()}</label>
-                        <button onClick={e=>{logout(history)}}>
+                        <button onClick={()=>{logout(history)}}>
                             <MdExitToApp size={16} /> 
                         </button>
                         
@@ -139,5 +143,5 @@ export default function Home() {
                 </Section>
             </Container>
         </Main>
-    )
+    ) : null
 }
