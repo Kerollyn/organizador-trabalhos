@@ -7,7 +7,7 @@ import useModalEdit from '../ModalEdit/useModal';
 import ModalDetail from '../ModalDetail';
 import useModalDetail from '../ModalDetail/useModal';
 
-import { Button } from './styles'
+import { Button, DateDiv } from './styles'
 //Icones dos botões
 import { MdDelete, MdModeEdit, MdFileDownload, MdDescription } from "react-icons/md";
 //import { useState } from 'react';
@@ -42,7 +42,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 <div className="titulo">{title}</div>
                 <div className="disciplina">{subject}</div>
                 <div className="nomeProfessor">{professorName}</div>
-                <div className="nomeProfessor">{getViewFormattedDate( classwork.deadline )}</div>
+                <DateDiv deadline={ classwork.deadline }>{getViewFormattedDate( classwork.deadline )}</DateDiv>
                 <div className="buttons">
                     <button>
                         <MdFileDownload size={25}/>

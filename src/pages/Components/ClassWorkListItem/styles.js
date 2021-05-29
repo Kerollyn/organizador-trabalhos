@@ -1,4 +1,15 @@
+import { getDaysUntilDeadline } from '../../../shared/dateUtils'
 import styled from 'styled-components'
+
+const getColor = ( daysToDeadline ) => {
+    const colors = [
+        { color: 'black', test: daysToDeadline > 1 },
+        { color: 'orange', test: daysToDeadline === 1 },
+        { color: 'red', test: daysToDeadline < 1 }
+    ]
+    console.log( daysToDeadline )
+    return colors.find( element => element.test ).color
+}
 
 export const Button = styled.button`
     display: flex;
@@ -13,5 +24,8 @@ export const Button = styled.button`
         align-items: center;
         margin-top: 1px;
     }
+`
 
+export const DateDiv = styled.div`
+    color: ${ props => getColor( getDaysUntilDeadline( props.deadline ) ) }
 `
