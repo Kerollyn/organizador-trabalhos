@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { MdExitToApp} from 'react-icons/md'
 import { Main, Container, Top, Section } from './styles'
-import Logo from '../../assets/LogoV2.png'
+import Logo from '../../asserts/LogoV2.png'
 
 
 import ModalUpload from '../Components/ModalUpload'

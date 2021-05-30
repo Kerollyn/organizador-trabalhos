@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
-import Logo from '../../assets/Logo.png'
+import Logo from '../../asserts/Logo.png';
 
 
 import { useHistory } from "react-router-dom";
