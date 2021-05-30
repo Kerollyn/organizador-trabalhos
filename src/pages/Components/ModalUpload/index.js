@@ -125,7 +125,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input onChange={e => setTitle( e.target.value )} value={ getCorrectValue( createNew, title, classwork.title, hasChanged ) }/>
+                                            <Input onChange={e => defaultOnChangeHandler( setTitle, e.target.value )} value={ getCorrectValue( createNew, title, classwork.title, hasChanged ) }/>
                                         </BlockInput>
                                     </li>
                                     <li>
