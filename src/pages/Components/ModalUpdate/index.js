@@ -20,45 +20,53 @@ const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, set
     setFileKey( Math.random() )
 }
 
-const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
-    const { title, subject, professorName } = classwork
-    const fieldsToValidate = [ file, title, subject, professorName ]
+const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged } ) => {
+    if ( !hasChanged && !file ) {
+        return alert( 'Nenhuma mudança foi detectada.' )
+    }
+    const fieldsToValidate = [ classwork.title, classwork.subject, classwork.professorName ]
     try {
-        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ) , true )
+        const formIsFulfilled = fieldsToValidate.reduce( ( acc, field ) => acc && validateField( field ), true )
 
         if( !formIsFulfilled ) {
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
 
-        const newClasswork = await ClassworkApi.uploadClasswork( classwork, file )
-        insertOrRemoveClasswork( { targetClasswork: newClasswork, list: classwork.status, method: 'insert' } )
-        alert('Arquivo salvo com sucesso!')
-    } catch( err ) {
-        console.error( err.stack )
-        if ( err.response ) {
-            switch (err.response.status) {
-                case 409:
-                    alert(`Você já possui um trabalho com este nome.\nNome do trabalho: ${ err.response.data.title }`)
-                    break
-                default:
-                    defaultAlert()
-                    break
-            }    
-        } else {
-            defaultAlert()
-        }
+        const updatedClasswork = await ClassworkApi.updateClasswork( classwork, file )
+        insertOrRemoveClasswork( { targetClasswork: updatedClasswork, list: classwork.status, method: 'update' } )
+        return alert('Arquivo salvo com sucesso!')
+
+    } catch ( error ) {
+        console.error( error.stack )
+        return defaultAlert()
     }
 }
 
+const getCorrectValue = (stateValue, classworkValue, hasChanged, executeSetter ) => {
+    const stateAndClassworkAreEqual = stateValue === classworkValue
+    if ( stateAndClassworkAreEqual || hasChanged ) {
+        return stateValue
+    }
+    executeSetter( classworkValue )
+    return classworkValue
+}
+
+const _defaultOnChangeHandler = ( { hasChanged, setHasChanged }, executeSetter, valueToSet ) => {
+    setHasChanged( hasChanged )
+    executeSetter( valueToSet )
+}
+
 const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => {
-    const [title, setTitle] = useState( [])
-    const [professor, setProfessor] = useState([])
-    const [subject, setSubject] = useState([])
+    const [title, setTitle] = useState( classwork.title)
+    const [professor, setProfessor] = useState(classwork.professorName)
+    const [subject, setSubject] = useState(classwork.subject)
     const [file, setFile] = useState(null)
     const [fileKey, setFileKey] = useState([])
-    const [deadline, setDeadline] = useState([])
-    const [status, setStatus] = useState('')
+    const [deadline, setDeadline] = useState(classwork.deadline)
+    const [status, setStatus] = useState(classwork.status)
+    const [hasChanged, setHasChanged] = useState(false)
 
+    const defaultOnChangeHandler = _defaultOnChangeHandler.bind( null, { hasChanged: true, setHasChanged } )
     const cleanModal = cleanup.bind( null, { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle } )
     return isShowing
         ? ReactDOM.createPortal(
@@ -83,33 +91,33 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => 
                                         <MdCloudUpload size={50}/>
                                     </li>
                                     <li>
-                                        <input type="file" onChange={e => setFile( e.target.files[0])} key={fileKey  || ''}/>
+                                        <input type="file" onChange={e => defaultOnChangeHandler( setFile, e.target.files[0])} key={fileKey  || ''}/>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Titulo do trabalho</label>
-                                            <Input onChange={e => setTitle( e.target.value )} value={ title }/>
+                                            <Input onChange={e => defaultOnChangeHandler( setTitle, e.target.value )} value={getCorrectValue(title, classwork.title, hasChanged, setTitle)}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Disciplina</label>
-                                            <Input onChange={e => setSubject( e.target.value )} value={subject}/>
+                                            <Input onChange={e => defaultOnChangeHandler( setSubject, e.target.value )} value={getCorrectValue(subject, classwork.subject, hasChanged, setSubject)}/>
                                         </BlockInput>
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Nome do professor</label>
-                                            <Input onChange={e => setProfessor( e.target.value )} value={professor}/>
+                                            <Input onChange={e => defaultOnChangeHandler( setProfessor, e.target.value )} value={getCorrectValue(professor, classwork.professorName, hasChanged, setProfessor)}/>
                                         </BlockInput>                                        
                                     </li>
                                     <li>
                                         <BlockInput>
                                             <label>Data para entrega</label>
                                             <Input
-                                                onChange={e => setDeadline( e.target.value )}
-                                                value={getFormattedDate(deadline)}
-                                                selected={getFormattedDate(deadline)}
+                                                onChange={e => defaultOnChangeHandler( setDeadline, e.target.value )}
+                                                value={getFormattedDate(getCorrectValue(deadline, classwork.deadline, hasChanged, setDeadline))}
+                                                selected={getFormattedDate(getCorrectValue(deadline, classwork.deadline, hasChanged, setDeadline))}
                                                 type="date"
                                                 key={`deadline-${fileKey || ''}`}
                                             />
@@ -119,9 +127,9 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => 
                                         <BlockInput>   
                                             <label>Status do trabalho</label>
                                             <Select
-                                                value={status}
-                                                selected={status}
-                                                onChange={e => setStatus( e.target.value )}
+                                                value={getCorrectValue(status, classwork.status, hasChanged, setStatus)}
+                                                selected={getCorrectValue(status, classwork.status, hasChanged, setStatus)}
+                                                onChange={e => defaultOnChangeHandler( setStatus, e.target.value )}
                                             >
                                                 <option value={''}>Selecione...</option>
                                                 <option value={'ongoing'}>Em andamento</option>
@@ -131,13 +139,18 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => 
                                     </li>
                                     <li>
                                         <button type="submit" onClick={
-                                            () => fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork })
-                                                    .then( () => {
-                                                        cleanModal( classwork )
-                                                        hide()
-                                                    } )
-                                            }>
-                                                Upload
+                                            () => fileUpdate( {
+                                                classwork: { ...classwork, title, subject, professorName: professor, status, deadline },
+                                                file,
+                                                insertOrRemoveClasswork,
+                                                hasChanged
+                                            } )
+                                            .then( () => {
+                                                cleanModal( classwork )
+                                                hide()
+                                            } )
+                                        }>
+                                            Salvar Alterações
                                         </button>
                                     </li>
 

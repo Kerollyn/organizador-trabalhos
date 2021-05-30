@@ -9,7 +9,7 @@ import Logo from '../../assets/LogoV2.png'
 
 
 import ModalUpload from '../Components/ModalUpload'
-import useModal from '../Components/ModalUpload/useModal'
+import useModal from '../Components/ModalUpdate/useModal'
 import ClassWorkList from '../Components/ClassWorkList'
 
 import constants from '../../shared/constants'
