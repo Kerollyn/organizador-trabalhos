@@ -6,13 +6,14 @@ import ModalUpload from '../ModalUpload';
 import useModalEdit from '../ModalEdit/useModal';
 import ModalDetail from '../ModalDetail';
 import useModalDetail from '../ModalDetail/useModal';
+import useLoader from '../Loader/useLoader'
+import Loader from '../Loader'
 
 import { Button, DateDiv } from './styles'
 //Icones dos botões
 import { MdDelete, MdModeEdit, MdRemoveRedEye, MdDescription } from "react-icons/md";
-import { useState } from 'react';
 
-const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
+const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status, toggleLoader) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;
     const token = getAccessToken()
     const options = {
@@ -21,6 +22,7 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
         }
     }
     try {
+        toggleLoader()
         await axios.delete( url, options )
         insertOrRemoveClasswork( { targetClasswork: { id }, list: status, method: 'remove' } )
     } catch( err ) {
@@ -32,10 +34,13 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
 function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
     const { isShowingEdit, toggleEdit } = useModalEdit()
     const { isShowingDetail, toggleDetail} = useModalDetail()
+    const { isShowingLoader, toggleLoader } = useLoader()
 
     const { id, status, title, subject, professorName, cloudStorageFileName } = classwork
 
-    return ( 
+    return (
+        <>
+        <Loader isShowing={isShowingLoader}/> 
         <li className='row-center'>
             <Button>
                 <div className="titulo">{title}</div>
@@ -71,7 +76,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {
-                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork, status)
+                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork, status, toggleLoader)
                         }
                     }}>
                          {/* Deletar  */}
@@ -80,6 +85,7 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                 </div>
             </Button>
         </li>
+        </>
         )
 }
 

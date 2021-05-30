@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import Loader from '../Loader'
+import useLoader from '../Loader/useLoader'
 
 import { MdCloudUpload } from 'react-icons/md'
 import { Container, ModalTeste, ModalConteudo, BlockInput, Input, Select } from './styles'
@@ -20,7 +22,7 @@ const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, set
     setFileKey( Math.random() )
 }
 
-const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
+const fileUpload = async({ classwork, file, insertOrRemoveClasswork, toggleLoader }) => {
     const { title, subject, professorName } = classwork
     const fieldsToValidate = [ file, title, subject, professorName ]
     try {
@@ -30,6 +32,7 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
 
+        toggleLoader()
         const newClasswork = await ClassworkApi.uploadClasswork( classwork, file )
         insertOrRemoveClasswork( { targetClasswork: newClasswork, list: classwork.status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
@@ -50,7 +53,7 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
     }
 }
 
-const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged } ) => {
+const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged, toggleLoader } ) => {
     if ( !hasChanged && !file ) {
         return alert( 'Nenhuma mudança foi detectada.' )
     }
@@ -61,7 +64,7 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged
         if( !formIsFulfilled ) {
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
-
+        toggleLoader()
         const updatedClasswork = await ClassworkApi.updateClasswork( classwork, file )
         insertOrRemoveClasswork( { targetClasswork: updatedClasswork, list: classwork.status, method: 'update' } )
         return alert('Arquivo salvo com sucesso!')
@@ -94,6 +97,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
     const [deadline, setDeadline] = useState(createNew ? [] : classwork.deadline)
     const [status, setStatus] = useState(createNew ? '' : classwork.status)
     const [hasChanged, setHasChanged] = useState(false)
+    const { isShowingLoader, toggleLoader } = useLoader()
 
     const defaultOnChangeHandler = _defaultOnChangeHandler.bind( null, { hasChanged: true, setHasChanged } )
     const cleanModal = cleanup.bind( null, { setDeadline, setFile, setFileKey, setProfessor, setStatus, setSubject, setTitle } )
@@ -101,6 +105,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
         ? ReactDOM.createPortal(
                 <Container>
                     <div className='modal-fundo' />
+                    <Loader isShowing={isShowingLoader}/>
                     <ModalTeste>
                         <div className='modal'>
                             <div className='modal-button'>
@@ -170,13 +175,13 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, creat
                                         <button type="submit" onClick={
                                             () => {
                                                 if ( createNew ) {
-                                                    fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork })
+                                                    fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork, toggleLoader })
                                                     .then( () => {
                                                         cleanModal( classwork )
                                                         hide()
                                                     } )
                                                 } else {
-                                                    fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork, hasChanged } )
+                                                    fileUpdate( { classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork, hasChanged, toggleLoader } )
                                                     .then( () => {
                                                         cleanModal( classwork )
                                                         hide()
