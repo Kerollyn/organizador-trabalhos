@@ -74,9 +74,6 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged
 
 const getCorrectValue = (createNew, stateValue, classworkValue, hasChanged) => {
     const stateAndClassworkAreEqual = stateValue === classworkValue
-    console.log( 'stateAndClassworkAreEqual >> ', stateAndClassworkAreEqual )
-    console.log( 'HAS CHANGED >> ', hasChanged )
-    console.log( 'STATE VALUE >> ', stateValue )
     if( !createNew ) {
         return stateAndClassworkAreEqual || hasChanged ? stateValue : classworkValue
     }
