@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 
 export const Container = styled.section`
+    overflow: auto;
 
     ul {
         display: flex;
@@ -20,6 +21,7 @@ export const Container = styled.section`
             display: flex;
             flex-direction: row;
             border: 1px solid #ccc;
+            
             div {
                 height: 40px;
                 width: 25%;
