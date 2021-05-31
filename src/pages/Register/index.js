@@ -1,7 +1,8 @@
 import { React, useState } from "react"; 
 import { Link } from "react-router-dom";
-
 import { useHistory } from "react-router-dom";
+
+import { validateEmail, validatePassword } from '../../shared/stringUtils'
 import axios from 'axios';
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
@@ -15,6 +16,18 @@ export default function SingUp () {
     let history = useHistory();
 
     function handleSubmit() {
+        if ( !name.length || !password.length || !email.length || !passwordConfirmation.length ) {
+            return alert( 'Todas as informações são obrigatórias' )
+        }
+        if ( !validateEmail( email ) ) {
+            return alert( 'E-mail inválido! Por favor, verifique o endereço informado.' )
+        }
+        if ( password !== passwordConfirmation ) {
+            return alert( 'Sua senha e sua confirmação de senha devem ser idênticas.' )
+        }
+        if ( !validatePassword( password ) ) {
+            return alert( 'Senha inválida!. Sua senha deve possuir no mínimo 6 caracteres, além de conter letras maiúsculas ou números' )
+        }
 
         axios.post('https://heroku-org-trabalhos-api.herokuapp.com/user', {
             name,
@@ -27,8 +40,11 @@ export default function SingUp () {
                 history.push("/");
             })
             .catch(error => {
-                alert("Erro ao cadastrar!");
+                if( error.response?.data?.msg ) {
+                    return alert( error.response.data.msg )
+                }
                 console.error(error)
+                return alert("Erro ao cadastrar!")
             })
     }
     
@@ -43,11 +59,11 @@ export default function SingUp () {
                     </BlockInput>
                     <BlockInput>
                         <label>E-mail</label>
-                        <Input type='text' value={email} onChange={e => setMail(e.target.value)}/>
+                        <Input type='text' value={email} onChange={e => setMail(e.target.value)} style={ {color: validateEmail( email ) ? 'green' : 'red'} }/>
                     </BlockInput>
                     <BlockInput>
                         <label>Senha</label>
-                        <Input type='password' value={password} onChange={e => setPassword(e.target.value)} />
+                        <Input type='password' value={password} onChange={e => setPassword(e.target.value)} style={ {color: validatePassword( password ) ? 'green' : 'red'} }/>
                     </BlockInput>
                     <BlockInput>
                         <label>Repita a senha</label>
