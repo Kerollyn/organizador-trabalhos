@@ -2,7 +2,7 @@ import { getAccessToken } from '../../../shared/tokenUtils'
 import { getViewFormattedDate } from '../../../shared/dateUtils'
 import axios from 'axios'
 
-import ModalUpload from '../ModalUpload';
+import ModalUpdate from '../ModalUpdate';
 import useModalEdit from '../ModalEdit/useModal';
 import ModalDetail from '../ModalDetail';
 import useModalDetail from '../ModalDetail/useModal';
@@ -61,12 +61,11 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                     <button type="button" onClick={toggleEdit}>
                         <MdModeEdit size={25}/>
                     </button>
-                    <ModalUpload
-                        isShowing={isShowingEdit}
+                    <ModalUpdate
                         hide={toggleEdit}
-                        classwork={classwork}
                         insertOrRemoveClasswork={insertOrRemoveClasswork}
-                        createNew={false}
+                        isShowing={isShowingEdit}
+                        classwork={classwork}
                     />
 
                     <button onClick={() => {
