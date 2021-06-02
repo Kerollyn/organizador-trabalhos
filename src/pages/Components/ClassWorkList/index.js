@@ -1,18 +1,19 @@
 import ClassWorkListItem from '../ClassWorkListItem'
 import Classwork from '../../../models/Classwork'
 
-const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswork ) => {
+const buildWorkLists = ( classWorkLists, classWorkStatus, insertOrRemoveClasswork, setIsShowingLoader ) => {
     const list = Object.keys( classWorkLists ).find( ( item ) => item === classWorkStatus )
     return classWorkLists[list]?.map( ( classWork, index ) => {
         return <ClassWorkListItem
                 classwork={new Classwork(classWork)}
                 key={ `${ list }-${ index }` }
                 insertOrRemoveClasswork={insertOrRemoveClasswork}
+                setIsShowingLoader={setIsShowingLoader}
             />
     } )
 }
 
-const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswork } ) => {
+const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswork, setIsShowingLoader } ) => {
     const classWorkLists = { ongoingList, doneList }
 
     return (
@@ -27,7 +28,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswo
                     <div/>
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'ongoingList', insertOrRemoveClasswork ) }
+                { buildWorkLists( classWorkLists, 'ongoingList', insertOrRemoveClasswork, setIsShowingLoader ) }
             </ul>
 
             <br/><br/>
@@ -41,7 +42,7 @@ const ClassWorkList = ( { ongoingList = [], doneList = [], insertOrRemoveClasswo
                     <div/>
                 </li>
                 {/* inform the desired list ( ongoingList | doneList ) as specified at classWorkLists*/}
-                { buildWorkLists( classWorkLists, 'doneList', insertOrRemoveClasswork ) }
+                { buildWorkLists( classWorkLists, 'doneList', insertOrRemoveClasswork, setIsShowingLoader ) }
             </ul>
         </>
     )

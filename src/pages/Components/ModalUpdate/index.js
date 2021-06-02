@@ -20,7 +20,7 @@ const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, set
     setFileKey( Math.random() )
 }
 
-const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged } ) => {
+const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged, setIsShowingLoader } ) => {
     if ( !hasChanged && !file ) {
         return alert( 'Nenhuma mudança foi detectada.' )
     }
@@ -32,7 +32,10 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
 
+        setIsShowingLoader( true )
         const updatedClasswork = await ClassworkApi.updateClasswork( classwork, file )
+        setIsShowingLoader( false )
+
         insertOrRemoveClasswork( { targetClasswork: updatedClasswork, list: classwork.status, method: 'update' } )
         return alert('Arquivo salvo com sucesso!')
 
@@ -56,7 +59,7 @@ const _defaultOnChangeHandler = ( { hasChanged, setHasChanged }, executeSetter, 
     executeSetter( valueToSet )
 }
 
-const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => {
+const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, setIsShowingLoader }) => {
     const [title, setTitle] = useState( classwork.title)
     const [professor, setProfessor] = useState(classwork.professorName)
     const [subject, setSubject] = useState(classwork.subject)
@@ -143,7 +146,8 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => 
                                                 classwork: { ...classwork, title, subject, professorName: professor, status, deadline },
                                                 file,
                                                 insertOrRemoveClasswork,
-                                                hasChanged
+                                                hasChanged,
+                                                setIsShowingLoader
                                             } )
                                             .then( () => {
                                                 cleanModal( classwork )

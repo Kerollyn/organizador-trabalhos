@@ -12,7 +12,7 @@ import { Button, DateDiv } from './styles'
 import { MdDelete, MdModeEdit, MdRemoveRedEye, MdDescription } from "react-icons/md";
 //import { useState } from 'react';
 
-const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status) => {
+const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, status, setIsShowingLoader) => {
     const url = `https://heroku-org-trabalhos-api.herokuapp.com/classworks/${ id }?cloudStorageFileName=${ cloudStorageFileName }`;
     const token = getAccessToken()
     const options = {
@@ -21,7 +21,9 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
         }
     }
     try {
+        setIsShowingLoader( true )
         await axios.delete( url, options )
+        setIsShowingLoader( false )
         insertOrRemoveClasswork( { targetClasswork: { id }, list: status, method: 'remove' } )
     } catch( err ) {
         console.error( err.stack )
@@ -29,7 +31,7 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
     }
 }
 
-function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
+function ClassWorkListItem ( { classwork, insertOrRemoveClasswork, setIsShowingLoader } ){
     const { isShowingEdit, toggleEdit } = useModalEdit()
     const { isShowingDetail, toggleDetail} = useModalDetail()
 
@@ -66,11 +68,12 @@ function ClassWorkListItem ( { classwork, insertOrRemoveClasswork } ){
                         insertOrRemoveClasswork={insertOrRemoveClasswork}
                         isShowing={isShowingEdit}
                         classwork={classwork}
+                        setIsShowingLoader={setIsShowingLoader}
                     />
 
                     <button onClick={() => {
                         if(window.confirm('Deseja deletar este arquivo?')) {
-                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork, status)
+                            deleteFile(id, cloudStorageFileName, insertOrRemoveClasswork, status, setIsShowingLoader)
                         }
                     }}>
                          {/* Deletar  */}
