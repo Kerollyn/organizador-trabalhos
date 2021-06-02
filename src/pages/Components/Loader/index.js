@@ -11,7 +11,7 @@ function CustomLoader( { isShowing } ) {
                     color="#9e1a2a"
                     height={150}
                     width={150}
-                    timeout={300000000000000}
+                    timeout={3000}
                     visible={isShowing}
                 />
             </div>
