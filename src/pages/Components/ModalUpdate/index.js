@@ -34,7 +34,6 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged
 
         setIsShowingLoader( true )
         const updatedClasswork = await ClassworkApi.updateClasswork( classwork, file )
-        setIsShowingLoader( false )
 
         insertOrRemoveClasswork( { targetClasswork: updatedClasswork, list: classwork.status, method: 'update' } )
         return alert('Arquivo salvo com sucesso!')
@@ -42,6 +41,8 @@ const fileUpdate = async( { classwork, file, insertOrRemoveClasswork, hasChanged
     } catch ( error ) {
         console.error( error.stack )
         return defaultAlert()
+    } finally {
+        setIsShowingLoader( false )
     }
 }
 

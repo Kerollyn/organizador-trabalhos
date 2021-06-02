@@ -23,11 +23,13 @@ const deleteFile = async( id, cloudStorageFileName, insertOrRemoveClasswork, sta
     try {
         setIsShowingLoader( true )
         await axios.delete( url, options )
-        setIsShowingLoader( false )
+
         insertOrRemoveClasswork( { targetClasswork: { id }, list: status, method: 'remove' } )
     } catch( err ) {
         console.error( err.stack )
         alert('Ocorreu um erro ao tentar deletar o arquivo.\n'+err.stack)
+    } finally {
+        setIsShowingLoader( false )
     }
 }
 

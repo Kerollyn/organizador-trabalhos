@@ -32,7 +32,6 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork, setIsShowin
 
         setIsShowingLoader( true )
         const newClasswork = await ClassworkApi.uploadClasswork( classwork, file )
-        setIsShowingLoader( false )
         insertOrRemoveClasswork( { targetClasswork: newClasswork, list: classwork.status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
     } catch( err ) {
@@ -49,6 +48,8 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork, setIsShowin
         } else {
             defaultAlert()
         }
+    } finally {
+        setIsShowingLoader( false )
     }
 }
 
