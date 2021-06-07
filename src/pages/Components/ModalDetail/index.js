@@ -41,6 +41,12 @@ function ModalDetail({ isShowing, hide, classwork }) {
                                     </BlockInput>
                                 </li>                   
                                 <li>
+                                    <BlockInput>   
+                                        <label>Nome do arquivo</label>
+                                        <label>{classwork.fileName}</label>
+                                    </BlockInput>
+                                </li>                   
+                                <li>
                                     <BlockInput>
                                         <label>Data de entrega</label>
                                         <label>{getViewFormattedDate( classwork.deadline )}</label>
