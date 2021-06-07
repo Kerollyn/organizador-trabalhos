@@ -20,7 +20,7 @@ const cleanup = ( { setProfessor, setTitle, setSubject, setFile, setFileKey, set
     setFileKey( Math.random() )
 }
 
-const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
+const fileUpload = async({ classwork, file, insertOrRemoveClasswork, setIsShowingLoader }) => {
     const { title, subject, professorName } = classwork
     const fieldsToValidate = [ file, title, subject, professorName ]
     try {
@@ -30,6 +30,7 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
             return alert( 'Erro ao tentar realizar upload! Todos os campos devem estar preenchidos!' )
         }
 
+        setIsShowingLoader( true )
         const newClasswork = await ClassworkApi.uploadClasswork( classwork, file )
         insertOrRemoveClasswork( { targetClasswork: newClasswork, list: classwork.status, method: 'insert' } )
         alert('Arquivo salvo com sucesso!')
@@ -47,10 +48,12 @@ const fileUpload = async({ classwork, file, insertOrRemoveClasswork }) => {
         } else {
             defaultAlert()
         }
+    } finally {
+        setIsShowingLoader( false )
     }
 }
 
-const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => {
+const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {}, setIsShowingLoader }) => {
     const [title, setTitle] = useState( [])
     const [professor, setProfessor] = useState([])
     const [subject, setSubject] = useState([])
@@ -131,7 +134,7 @@ const Modal = ({ isShowing, hide, insertOrRemoveClasswork, classwork = {} }) => 
                                     </li>
                                     <li>
                                         <button type="submit" onClick={
-                                            () => fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork })
+                                            () => fileUpload({ classwork: { ...classwork, title, subject, professorName: professor, status, deadline }, file, insertOrRemoveClasswork, setIsShowingLoader })
                                                     .then( () => {
                                                         cleanModal( classwork )
                                                         hide()

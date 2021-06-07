@@ -6,6 +6,7 @@ import { validateEmail, validatePassword } from '../../shared/stringUtils'
 import axios from 'axios';
 
 import { Container, Aside, BlockInput, Input, Button } from './styles';
+import Loader from '../Components/Loader'
 
 export default function SingUp () {
 
@@ -13,9 +14,10 @@ export default function SingUp () {
     const [password, setPassword] = useState([]);
     const [email, setMail] = useState([]);
     const [passwordConfirmation, setPasswordConfirmation] = useState([]);
+    const [ isShowingLoader, setIsShowingLoader ] = useState( false )
     let history = useHistory();
 
-    function handleSubmit() {
+    function handleSubmit( setIsShowingLoader ) {
         if ( !name.length || !password.length || !email.length || !passwordConfirmation.length ) {
             return alert( 'Todas as informações são obrigatórias' )
         }
@@ -29,6 +31,7 @@ export default function SingUp () {
             return alert( 'Senha inválida!. Sua senha deve possuir no mínimo 6 caracteres, além de conter letras maiúsculas ou números' )
         }
 
+        setIsShowingLoader( true )
         axios.post('https://heroku-org-trabalhos-api.herokuapp.com/user', {
             name,
             email,
@@ -46,10 +49,14 @@ export default function SingUp () {
                 console.error(error)
                 return alert("Erro ao cadastrar!")
             })
+            .finally( () => {
+                setIsShowingLoader( false )
+            } )
     }
     
     return (
         <Container>
+            <Loader isShowing={ isShowingLoader }/>
             <Aside>
                 <form>
                     <strong>Cadastro ao sistema</strong>
@@ -69,11 +76,9 @@ export default function SingUp () {
                         <label>Repita a senha</label>
                         <Input type='password' value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)}/>
                     </BlockInput>
-                    {/* <br />
-                    <br /> */}
 
                     <Button>
-                        <button type='button' onClick={handleSubmit}>Cadastrar</button>
+                        <button type='button' onClick={() => handleSubmit( setIsShowingLoader )}>Cadastrar</button>
                         <Link to="/">
                             <button type='button'>Cancelar</button>
                         </Link> 

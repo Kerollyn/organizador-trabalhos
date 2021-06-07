@@ -9,15 +9,17 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import { setAccessToken } from '../../shared/tokenUtils'
+import Loader from '../Components/Loader'
 
 export default function Login() {
 
     const [email, setMail] = useState([]);
     const [password, setPassword] = useState([]);
+    const [ isShowingLoader, setIsShowingLoader ] = useState( false )
     let history = useHistory();
 
-    function handleSubmit() {
-
+    function handleSubmit( setIsShowingLoader ) {
+        setIsShowingLoader( true )
         axios.post('https://heroku-org-trabalhos-api.herokuapp.com/auth/token', {
             email,
             password
@@ -30,11 +32,14 @@ export default function Login() {
             .catch(error => {
                 alert("Usuário ou senha errado!")
                 console.error(error)
-            })
+            }).finally( () => {
+                setIsShowingLoader( false )
+            } )
     }
 
     return (
         <Container>
+            <Loader isShowing={isShowingLoader}/>
             <img src={Logo} alt="logo"/>
             <Aside>
                 <form>
@@ -50,7 +55,7 @@ export default function Login() {
                     </BlockInput>
     
                     <Button>
-                        <button type='button' onClick={handleSubmit}>Entrar</button>
+                        <button type='button' onClick={() => handleSubmit(setIsShowingLoader)}>Entrar</button>
                         <Link to="/register">
                             <button type='button'>Cadastrar</button>
                         </Link>

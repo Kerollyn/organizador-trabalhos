@@ -15,6 +15,8 @@ import ClassWorkList from '../Components/ClassWorkList'
 import constants from '../../shared/constants'
 import { getAccessToken, setAccessToken, getUser, validateToken } from '../../shared/tokenUtils'
 
+import Loader from '../Components/Loader'
+
 const { API_BASE_URL } = constants
 
 const _handleClassworkListChange = ( method, classworkList, targetClasswork, setClassworkList, altClassList, setAltList ) => {
@@ -94,6 +96,7 @@ export default function Home() {
     const { isShowing, toggle } = useModal()
     const [classWorkOngoingList, setClassWorkOngoingList] = useState([])
     const [classWorkDoneList, setClassWorkDoneList] = useState([])
+    const [isShowingLoader, setIsShowingLoader] = useState(false)
 
     const history = useHistory();
 
@@ -108,6 +111,7 @@ export default function Home() {
     const insertOrRemoveClasswork = _insertOrRemoveClasswork.bind( null, { classWorkOngoingList, classWorkDoneList, setClassWorkOngoingList, setClassWorkDoneList } )
     return validateToken() ? (
         <Main>
+            <Loader isShowing={isShowingLoader}/>
             <Container>
                 <header>
                     <div className='titulo'>
@@ -132,8 +136,11 @@ export default function Home() {
                             <button type='button' onClick={toggle}>
                                 Upload
                             </button>
-                            <ModalUpload isShowing={isShowing} hide={toggle}
+                            <ModalUpload
+                                isShowing={isShowing}
+                                hide={toggle}
                                 insertOrRemoveClasswork={insertOrRemoveClasswork}
+                                setIsShowingLoader={setIsShowingLoader}
                             />
                         </div>
                     </form>
@@ -142,6 +149,7 @@ export default function Home() {
                         ongoingList={classWorkOngoingList}
                         doneList={classWorkDoneList}
                         insertOrRemoveClasswork={insertOrRemoveClasswork}
+                        setIsShowingLoader={setIsShowingLoader}
                     />
                 </Section>
             </Container>
